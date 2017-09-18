@@ -1,6 +1,7 @@
 # dagger
 Dagger, make programming easier！致力于使得编程更加简单作为基础理论，逐渐添加更多有趣的功能！<br/>
 
+1:开发进度以及流程
 基础框架搭建:springboot+springmvc+thymeleaf √ <br/>
 添加数据库持久层:mybaties+mysql √ <br/>
 添加数据库缓存层:redis+redis-cache √ <br/>
@@ -18,7 +19,17 @@ Dagger, make programming easier！致力于使得编程更加简单作为基础�
 添加session管理页面:session-mange(单点登录配置，超时时间配置) <br/>
 添加代码生成器页面:code-gen <br/>
 
-@author wanghjbuf
-we-chat wanghjbuf
+2:代码部署详情<br/>
+fork<br/>
+git clone address<br/>
+mvn eclipse:eclipse<br/>
 
+3:运行示例<br/>
+cd dagger/dagger-browser<br/>
+mvn spring-boot:run<br/>
+
+++++++++++++++++++++++++++++++++++++++++++++++++<br/>
+@author wanghjbuf<br/>
+we-chat wanghjbuf<br/>
+++++++++++++++++++++++++++++++++++++++++++++++++<br/>
 
