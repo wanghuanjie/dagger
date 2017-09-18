@@ -17,3 +17,6 @@ Dagger, make programming easier！致力于使得编程更加简单作为基础�
 添加用户管理页面:user-manage <br/>
 添加session管理页面:session-mange(单点登录配置，超时时间配置) <br/>
 添加代码生成器页面:code-gen <br/>
+
+@author wanghjbuf
+we-chat wanghjbuf
