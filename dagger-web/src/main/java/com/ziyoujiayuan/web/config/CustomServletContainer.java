@@ -13,7 +13,7 @@ public class CustomServletContainer implements EmbeddedServletContainerCustomize
 
 	@Override 
 	public void customize(ConfigurableEmbeddedServletContainer configurableEmbeddedServletContainer) {
-		configurableEmbeddedServletContainer.setPort(8087);
+		configurableEmbeddedServletContainer.setPort(8100);
 	
 		configurableEmbeddedServletContainer.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,"/404.html"));
 		configurableEmbeddedServletContainer.addErrorPages(new ErrorPage(HttpStatus.EXPECTATION_FAILED,"/error.html"));
