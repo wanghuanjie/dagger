@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ziyoujiayuan.browser.remote.impl.alligator.goods.GoodsServiceImpl;
+import com.ziyoujiayuan.web.param.ResponseJsonResult;
 
 /**
  * 商品详情接口
@@ -43,5 +44,27 @@ public class GoodsController {
 		}
 	    
 	    return map;
+	}
+	
+	/**
+	 * 获取商品详情
+	 * @param goods_id
+	 * @return
+	 */
+	@RequestMapping("/details_1")
+	@ResponseBody
+	public ResponseJsonResult details_1(String goods_id) {
+		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
+	    try {
+	    	    responseJsonResult.setData(goodsServiceImpl.getGoodsDetail(goods_id));
+            responseJsonResult.setMsg("操作成功");
+            responseJsonResult.setSuccess(true);
+		} catch (Exception e) {
+			responseJsonResult.setMsg("操作成功");
+            responseJsonResult.setSuccess(true);
+		    
+		    e.printStackTrace();
+		}
+	    return responseJsonResult;
 	}
 }
