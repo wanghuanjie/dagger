@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ziyoujiayuan.data.sql.mybaties.entity.GoodsDetailBean;
-import com.ziyoujiayuan.data.sql.mybaties.entity.GoodsDetailBeanExample;
-import com.ziyoujiayuan.data.sql.mybaties.mapper.GoodsDetailBeanMapper;
+import com.ziyoujiayuan.data.sql.mybaties.entity.auto.GoodsDetailBean;
+import com.ziyoujiayuan.data.sql.mybaties.entity.auto.GoodsDetailBeanExample;
+import com.ziyoujiayuan.data.sql.mybaties.mapper.auto.GoodsDetailBeanMapper;
 
 /**
  * 商品详情实现
@@ -29,7 +29,7 @@ public class GoodsServiceImpl {
 
 			resultBean = list.size()>0?list.get(0):new GoodsDetailBean();
 		} else {
-			resultBean = goodsDetailBeanMapper.selectByPrimaryKey(new Integer(goods_id));
+			resultBean = goodsDetailBeanMapper.selectByPrimaryKey(goods_id);
 		}
 		return resultBean;
 	}

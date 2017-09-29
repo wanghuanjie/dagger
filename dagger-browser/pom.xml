@@ -21,14 +21,24 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+		
+	   <dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+		</dependency>
 	
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		
-				        <!--支持使用 JDBC 访问数据库-->
+	    <!--支持使用 JDBC 访问数据库-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -38,17 +48,28 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
        </dependency> 
+       
        <dependency>
            <groupId>org.springframework.session</groupId>
            <artifactId>spring-session-data-redis</artifactId>
        </dependency>
        
+       <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+		
         <!--添加适用于生产环境的功能，如性能指标和监测等功能。 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         
+       <!--  <dependency>
+			<groupId>org.springframework.hateoas</groupId>
+			<artifactId>spring-hateoas</artifactId>
+		</dependency> -->
+		
 		<dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
@@ -74,7 +95,6 @@
             <artifactId>fastjson</artifactId>
             <version>1.1.43</version>
         </dependency>
-	
 		
 		 <dependency>
            <groupId>com.ziyoujiayuan</groupId>
@@ -84,6 +104,11 @@
         <dependency>
            <groupId>com.ziyoujiayuan</groupId>
 	       <artifactId>dagger-data</artifactId>
+        </dependency>
+        
+        <dependency>
+           <groupId>com.ziyoujiayuan</groupId>
+	       <artifactId>dagger-core</artifactId>
         </dependency>
         
 	</dependencies>
