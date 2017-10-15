@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ziyoujiayuan.data.sql.mybaties.mapper.PersonMapper">
- 
-  <select id="getPerson" resultType="com.ziyoujiayuan.data.sql.mybaties.entity.Person">
-    select ID,NAME from T_PERSON;
-  </select>
- 
-</mapper>
