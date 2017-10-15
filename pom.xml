@@ -22,6 +22,11 @@
 	<java.version>1.8</java.version>
     <dagger.web.version>0.0.1-SNAPSHOT</dagger.web.version>
     <dagger.data.version>0.0.1-SNAPSHOT</dagger.data.version>
+    <dagger.core.version>0.0.1-SNAPSHOT</dagger.core.version>
+    <dagger.api.version>0.0.1-SNAPSHOT</dagger.api.version>
+    <alibaba.dubbo.version>2.5.6</alibaba.dubbo.version>  
+    <apache.zookeeper.version>3.4.9</apache.zookeeper.version>  
+    <tec.zkclient.version>0.1</tec.zkclient.version> 
   </properties>
   
    <dependencyManagement>
@@ -37,11 +42,44 @@
 	       <artifactId>dagger-data</artifactId>
            <version>${dagger.data.version}</version>
         </dependency>
+        
+        <dependency>
+           <groupId>com.ziyoujiayuan</groupId>
+	       <artifactId>dagger-core</artifactId>
+           <version>${dagger.core.version}</version>
+        </dependency>
+        
+        <dependency>
+           <groupId>com.ziyoujiayuan</groupId>
+	       <artifactId>dagger-api</artifactId>
+           <version>${dagger.api.version}</version>
+        </dependency>
+        
+        <dependency>  
+            <groupId>com.alibaba</groupId>  
+            <artifactId>dubbo</artifactId>  
+            <version>${alibaba.dubbo.version}</version>  
+        </dependency>  
+        
+        <dependency>  
+            <groupId>org.apache.zookeeper</groupId>  
+            <artifactId>zookeeper</artifactId>  
+            <version>${apache.zookeeper.version}</version>  
+        </dependency> 
+        
+        <dependency>  
+            <groupId>com.github.sgroschupf</groupId>  
+            <artifactId>zkclient</artifactId>  
+            <version>${tec.zkclient.version}</version>  
+        </dependency> 
+         
      </dependencies>
    </dependencyManagement>
   
    <modules>
-	<module>dagger-browser</module>
+    <module>dagger-browser</module>
+    <module>dagger-api</module>
+    <module>dagger-service</module>
     <module>dagger-web</module>
     <module>dagger-core</module>
     <module>dagger-data</module>
