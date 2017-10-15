@@ -2,10 +2,10 @@
 Dagger, make programming easier！致力于使得编程更加简单作为基础理论，逐渐添加更多有趣的功能！<br/>
 
 1:开发进度以及流程
-基础框架搭建:springboot+springmvc+thymeleaf √ <br/>
-添加数据库持久层:mybaties+mysql √ <br/>
-添加数据库缓存层:redis+redis-cache √ <br/>
-添加session共享:redis-session √ <br/>
+基础框架搭建:springboot+springmvc+thymeleaf <span style="color:red;">√</span> <br/>
+添加数据库持久层:mybaties+mysql <span style="color:red;">√</span> <br/>
+添加数据库缓存层:redis+redis-cache <span style="color:red;">√</span> <br/>
+添加session共享:redis-session <span style="color:red;">√</span> <br/>
 添加日志记录功能:logback <br/>
 添加前端动态框架:vue <br/>
 添加样式框架:element <br/>
