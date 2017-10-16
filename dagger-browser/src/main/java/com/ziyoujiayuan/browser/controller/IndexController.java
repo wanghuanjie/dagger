@@ -9,6 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * 首页测试
+ * @author wanghjbuf
+ * @date 2017年10月16日
+ */
 @Controller
 public class IndexController {
 	
@@ -28,6 +33,6 @@ public class IndexController {
 		model.addAttribute("msg", map);
 		
 		logger.info("欢迎来到dagger的世界");
-		return "home";
+		return "views/index";
 	}
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ziyoujiayuan.browser.beans.Person;
 
 /**
- * redis控制类
+ * Redis 基础测试demo
  * @Author wanghjbuf
  * @Date 2017年9月16日
  */
