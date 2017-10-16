@@ -9,4 +9,15 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>dagger-api</name>
   <description>API</description>
+  
+  <dependencies>
+     <dependency>
+        <groupId>com.ziyoujiayuan</groupId>
+	    <artifactId>dagger-base</artifactId>
+     </dependency>
+     <dependency>
+        <groupId>com.ziyoujiayuan</groupId>
+	    <artifactId>dagger-data</artifactId>
+     </dependency>
+  </dependencies>
 </project>

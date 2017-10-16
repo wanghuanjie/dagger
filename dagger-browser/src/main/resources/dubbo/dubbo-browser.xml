@@ -12,5 +12,9 @@
     <!-- 注册中心暴露服务地址 -->  
    <dubbo:registry protocol="${dubbo.registry.protocol}" address="${dubbo.registry.address}" />  
       
-    <dubbo:reference id="com.ziyoujiayuan.service.demo.DemoServiceImpl" interface="com.ziyoujiayuan.api.demo.DemoService" />  
+    <dubbo:reference id="com.ziyoujiayuan.service.demo.DemoServiceImpl" interface="com.ziyoujiayuan.api.demo.DemoService" /> 
+    <dubbo:reference id="com.ziyoujiayuan.service.usermanage.LoginServiceImpl" interface="com.ziyoujiayuan.api.usermanage.LoginService" /> 
+    <dubbo:reference id="com.ziyoujiayuan.service.usermanage.RegisterServiceImpl" interface="com.ziyoujiayuan.api.usermanage.RegisterService" /> 
+    <dubbo:reference id="com.ziyoujiayuan.service.usermanage.UserServiceImpl" interface="com.ziyoujiayuan.api.usermanage.UserService" /> 
+     
 </beans>

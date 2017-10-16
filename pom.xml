@@ -20,6 +20,7 @@
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	<java.version>1.8</java.version>
+	<dagger.base.version>0.0.1-SNAPSHOT</dagger.base.version>
     <dagger.web.version>0.0.1-SNAPSHOT</dagger.web.version>
     <dagger.data.version>0.0.1-SNAPSHOT</dagger.data.version>
     <dagger.core.version>0.0.1-SNAPSHOT</dagger.core.version>
@@ -27,10 +28,16 @@
     <alibaba.dubbo.version>2.5.6</alibaba.dubbo.version>  
     <apache.zookeeper.version>3.4.9</apache.zookeeper.version>  
     <tec.zkclient.version>0.1</tec.zkclient.version> 
+    <projectlombok.lombok.version>1.16.10</projectlombok.lombok.version>
   </properties>
   
    <dependencyManagement>
      <dependencies>
+         <dependency>
+           <groupId>com.ziyoujiayuan</groupId>
+	       <artifactId>dagger-base</artifactId>
+           <version>${dagger.base.version}</version>
+        </dependency>
         <dependency>
            <groupId>com.ziyoujiayuan</groupId>
 	       <artifactId>dagger-web</artifactId>
@@ -72,6 +79,12 @@
             <artifactId>zkclient</artifactId>  
             <version>${tec.zkclient.version}</version>  
         </dependency> 
+        
+        <dependency>
+  			<groupId>org.projectlombok</groupId>
+  			<artifactId>lombok</artifactId>
+ 			<version>${projectlombok.lombok.version}</version>
+		</dependency>
          
      </dependencies>
    </dependencyManagement>

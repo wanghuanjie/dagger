@@ -1,4 +1,4 @@
-package com.ziyoujiayuan.browser.service.rabbitmq;
+package com.ziyoujiayuan.browser.serve.rabbitmq;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;

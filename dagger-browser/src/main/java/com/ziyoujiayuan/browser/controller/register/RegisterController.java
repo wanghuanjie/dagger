@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ziyoujiayuan.browser.beans.register.RegisterRequestParam;
 import com.ziyoujiayuan.web.param.ResponseJsonResult;
 
 /**
@@ -38,7 +39,7 @@ public class RegisterController {
 	 * @return
 	 */
 	@RequestMapping("/doregister")
-	public ResponseJsonResult doregister(Model model) {
+	public ResponseJsonResult doregister(RegisterRequestParam registerRequestParam) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
 			//TODO 待加入注册相关的操作
