@@ -1,25 +1,27 @@
 package com.ziyoujiayuan.browser.controller.login;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ziyoujiayuan.browser.cons.ResultMsgCons;
+import com.ziyoujiayuan.browser.cons.ViewsBasePathCons;
+import com.ziyoujiayuan.browser.serve.usermanage.LoginServe;
 import com.ziyoujiayuan.web.param.ResponseJsonResult;
 
+import lombok.extern.slf4j.Slf4j;
 /**
  * 登录/登出功能相关
  * @Author wanghjbuf
  * @Date 2017年10月13日
  */
-@Controller
+@Slf4j
 @RestController
 @RequestMapping("/login")
 public class LoginController {
-
-	private final Logger logger = LoggerFactory.getLogger(LoginController.class);
+	
+	@Autowired
+	LoginServe loginServe;
 	
 	/**
 	 * 登录页面
@@ -27,9 +29,8 @@ public class LoginController {
 	 * @return
 	 */
 	@RequestMapping("/index")
-	public String in(Model model) {
-        logger.info("欢迎来到登录界面");	
-		return "views/login/index";
+	public String in() {
+		return ViewsBasePathCons.VIEWS_BASEPATH+"login/index";
 	}
 	
 	/**
@@ -38,18 +39,17 @@ public class LoginController {
 	 * @return
 	 */
 	@RequestMapping("/doin")
-	public ResponseJsonResult doin(Model model) {
+	public ResponseJsonResult doin() {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
-			//TODO 待加入登录相关的操作
+			loginServe.login();
 			
-		    responseJsonResult.setMsg("登录成功");
+		    responseJsonResult.setMsg(ResultMsgCons.LOGIN_SUCCESS);
             responseJsonResult.setSuccess(true);
-            logger.info("登录成功");
 		} catch (Exception e) {
 			responseJsonResult.setMsg(e.getMessage());
 			responseJsonResult.setSuccess(false);
-			logger.error(e.getMessage(),e);
+			log.error(e.getMessage(),e);
 		}
 		return responseJsonResult;
 	}
@@ -60,18 +60,17 @@ public class LoginController {
 	 * @return
 	 */
 	@RequestMapping("/doout")
-	public ResponseJsonResult doout(Model model) {
+	public ResponseJsonResult doout() {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
-			//TODO 待加入登出相关的操作
+			loginServe.logout();
 			
-			responseJsonResult.setMsg("注销成功");
+			responseJsonResult.setMsg(ResultMsgCons.LOGOUT_SUCCESS);
             responseJsonResult.setSuccess(true);
-            logger.info("注销成功");
 		} catch (Exception e) {
 			responseJsonResult.setMsg(e.getMessage());
 			responseJsonResult.setSuccess(false);
-			logger.error(e.getMessage(),e);
+			log.error(e.getMessage(),e);
 		}
 		return responseJsonResult;
 	}

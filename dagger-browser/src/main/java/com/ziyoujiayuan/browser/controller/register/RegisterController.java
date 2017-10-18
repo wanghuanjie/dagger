@@ -1,27 +1,31 @@
 package com.ziyoujiayuan.browser.controller.register;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ziyoujiayuan.browser.beans.register.RegisterRequestParam;
+import com.ziyoujiayuan.browser.cons.ResultMsgCons;
+import com.ziyoujiayuan.browser.cons.ViewsBasePathCons;
+import com.ziyoujiayuan.browser.serve.usermanage.RegisterServe;
 import com.ziyoujiayuan.web.param.ResponseJsonResult;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 注册功能
  * @Author wanghjbuf
  * @Date 2017年10月13日
  */
-@Controller
+@Slf4j
 @RestController
 @RequestMapping("/register")
 public class RegisterController {
 
-	private final Logger logger = LoggerFactory.getLogger(RegisterController.class);
-
+	@Autowired
+	RegisterServe registerServe;
+	
 	/**
 	 * 注册页面
 	 * @param model
@@ -29,8 +33,7 @@ public class RegisterController {
 	 */
 	@RequestMapping("/index")
 	public String index(Model model) {
-        logger.info("欢迎来到注册界面");	
-		return "views/register/index";
+		return ViewsBasePathCons.VIEWS_BASEPATH+"register/index";
 	}
 	
 	/**
@@ -42,15 +45,14 @@ public class RegisterController {
 	public ResponseJsonResult doregister(RegisterRequestParam registerRequestParam) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
-			//TODO 待加入注册相关的操作
+			registerServe.registerUserInfo(registerRequestParam);
 			
-		    responseJsonResult.setMsg("注册成功");
+		    responseJsonResult.setMsg(ResultMsgCons.REGIST_SUCCESS);
             responseJsonResult.setSuccess(true);
-            logger.info("注册成功");
 		} catch (Exception e) {
 			responseJsonResult.setMsg(e.getMessage());
 			responseJsonResult.setSuccess(false);
-			logger.error(e.getMessage(),e);
+			log.error(e.getMessage(),e);
 		}
 		return responseJsonResult;
 	}

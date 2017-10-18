@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ziyoujiayuan.api.usermanage.RegisterService;
 import com.ziyoujiayuan.base.exception.AppException;
 import com.ziyoujiayuan.base.utils.UuidUtils;
+import com.ziyoujiayuan.data.cons.exception.GeneralExceptionCons;
 import com.ziyoujiayuan.data.enums.usermanage.UserStatusEnum;
 import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.UserInfoBean;
 import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.UserInfoBeanExample;
@@ -41,7 +42,7 @@ public class RegisterServiceImpl implements RegisterService {
 			
 			userInfoBean.setUserCo(UuidUtils.getUUID());
 			userInfoBean.setStatus(UserStatusEnum.NORMAL.name());
-			userInfoBeanMapper.insert(userInfoBean);
+			userInfoBeanMapper.insertSelective(userInfoBean);
 			
 			//TODO 默认角色以及默认权限
 			
@@ -49,7 +50,7 @@ public class RegisterServiceImpl implements RegisterService {
 			throw e;
 	    } catch (Exception e) {
 			// TODO: handle exception
-	    	    throw new AppException("系统异常",e);
+	    	    throw new AppException(GeneralExceptionCons.BASE_ERRO_MSG,e);
 		}
 	}
 

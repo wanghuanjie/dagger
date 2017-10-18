@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @Author wanghjbuf
  * @Date 2017年9月16日
  */
-@Controller
 @RestController
 @RequestMapping("/session")
 public class SessionTimeController {

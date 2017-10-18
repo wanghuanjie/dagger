@@ -9,7 +9,6 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,7 +25,6 @@ import com.ziyoujiayuan.web.param.ResponseJsonResult;
  * @Author wanghjbuf
  * @Date 2017年9月11日
  */
-@Controller
 @RestController
 @RequestMapping("/demo")
 public class DemoController {

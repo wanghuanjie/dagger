@@ -1,5 +1,11 @@
 package com.ziyoujiayuan.browser.beans.register;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,15 +21,23 @@ public class RegisterRequestParam {
    /**
     * 用户名
     */
+   @NotNull
+   @NotEmpty
    private String name;
 
    /**
     * 密码
     */
+   @NotNull
+   @NotEmpty
    private String password;	
+   
    /**
     * 邮件
     */
+   @NotNull
+   @NotEmpty
+   @Email
    private String email;
 
    /**

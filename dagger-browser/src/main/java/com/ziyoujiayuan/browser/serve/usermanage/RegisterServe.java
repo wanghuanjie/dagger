@@ -1,6 +1,7 @@
 package com.ziyoujiayuan.browser.serve.usermanage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.ziyoujiayuan.api.usermanage.RegisterService;
@@ -15,10 +16,11 @@ import lombok.extern.slf4j.Slf4j;
  * @Author wanghjbuf
  * @Date 2017年10月16日
  */
-@Service("com.ziyoujiayuan.browser.serve.usermanage.RegisterServe")
 @Slf4j
+@Service("com.ziyoujiayuan.browser.serve.usermanage.RegisterServe")
 public class RegisterServe {
 	
+	@Qualifier("com.ziyoujiayuan.service.usermanage.RegisterServiceImpl")
 	@Autowired
 	RegisterService registerService;
 	
