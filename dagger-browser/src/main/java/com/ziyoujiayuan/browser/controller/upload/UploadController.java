@@ -57,7 +57,7 @@ public class UploadController {
 				            	inputStream = item.getInputStream();
 				          
 				          if (inputStream == null)
-						    	throw new Exception("未获取上传图片数据,操作失败！");
+						    	throw new AppException("未获取上传图片数据,操作失败！");
 				            
 				          filename = item.getName();
 			              String realPath = new StringBuffer(getRealPath(request)).append(File.separator).append("filepool").append(File.separator).toString();
