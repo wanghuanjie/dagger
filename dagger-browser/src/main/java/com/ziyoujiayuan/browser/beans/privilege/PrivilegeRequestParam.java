@@ -1,9 +1,8 @@
 package com.ziyoujiayuan.browser.beans.privilege;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-import com.sun.istack.internal.NotNull;
-import com.ziyoujiayuan.browser.beans.register.RegisterRequestParam;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import lombok.Data;
 
@@ -13,7 +12,6 @@ import lombok.Data;
  * @Date 2017年10月18日
  */
 @Data
-@SuppressWarnings("unused")
 public class PrivilegeRequestParam {
 
    @NotNull

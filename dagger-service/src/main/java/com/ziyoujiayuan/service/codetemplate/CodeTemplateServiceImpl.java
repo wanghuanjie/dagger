@@ -6,11 +6,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ziyoujiayuan.base.exception.AppException;
 import com.ziyoujiayuan.data.cons.exception.GeneralExceptionCons;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Service代码模版
  * @Author wanghjbuf
  * @Date 2017年10月18日
  */
+@Slf4j
 @Service("com.ziyoujiayuan.service.codetemplate.CodeTemplateServiceImpl")
 public class CodeTemplateServiceImpl {
 
@@ -18,8 +21,9 @@ public class CodeTemplateServiceImpl {
 	public void doAddPrivilege() throws AppException{
 		try {
 			//TODO
+			log.info("sssss");
+
 			throw new AppException(">>>>>>");
-			
 		} catch (AppException e) {
 			// TODO: handle exception
 			throw e;
