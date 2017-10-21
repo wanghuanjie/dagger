@@ -1,11 +1,19 @@
 package com.ziyoujiayuan.browser.serve.usermanage;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.ziyoujiayuan.api.usermanage.LoginService;
 import com.ziyoujiayuan.base.exception.AppException;
+import com.ziyoujiayuan.browser.beans.login.LoginRequestParam;
+import com.ziyoujiayuan.data.pojo.UserBasicInfo;
+import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.UserInfoBean;
+import com.ziyoujiayuan.web.beans.OnlineUser;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,17 +34,33 @@ public class LoginServe {
 	 * 登录相关操作
 	 * @throws AppException
 	 */
-	public void login() throws AppException{
+	public void login(LoginRequestParam loginRequestParam,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws AppException{
 		log.info("login");
-		loginService.doLogin();
+		UserInfoBean userInfoBean = new UserInfoBean();
+		userInfoBean.setAccount(loginRequestParam.getAccount());
+		userInfoBean.setPassword(loginRequestParam.getPassword());
+		
+		String dagger_token = loginService.doLogin(userInfoBean);
+		Cookie cookie = new Cookie("dagger_token", dagger_token);
+		httpServletResponse.addCookie(cookie);
+		OnlineUser.clean();
+
 	}
 	
 	/**
 	 * 登出相关操作
 	 * @throws AppException
 	 */
-	public void logout() throws AppException {
+	public void logout(String daggerToken, HttpServletResponse httpServletResponse) throws AppException {
 		log.info("logout");
-		loginService.dologout();
+		loginService.dologout(daggerToken);
+		
+		Cookie cookie = new Cookie(daggerToken, "");
+		cookie.setMaxAge(0);
+		httpServletResponse.addCookie(cookie);
+	}
+	
+	public UserBasicInfo getObjectForSession(String daggerToken) throws AppException{
+		return loginService.getUserBasicInfo(daggerToken);
 	}
 }

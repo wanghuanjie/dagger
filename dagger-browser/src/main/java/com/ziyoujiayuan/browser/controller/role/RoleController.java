@@ -5,9 +5,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ziyoujiayuan.base.exception.AppException;
 import com.ziyoujiayuan.browser.beans.role.RoleRequestParam;
@@ -26,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  * @Date 2017年10月17日
  */
 @Slf4j
-@RestController
+@Controller
 @RequestMapping("/rolemanage")
 public class RoleController extends BaseController{
 	
@@ -48,6 +49,7 @@ public class RoleController extends BaseController{
 	 * @param model
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/doadd")
 	public ResponseJsonResult doadd(RoleRequestParam roleRequestParam) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
@@ -69,6 +71,7 @@ public class RoleController extends BaseController{
 	 * @param httpServletRequest
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/doeditrole")
 	public ResponseJsonResult doeditrole(HttpServletRequest httpServletRequest) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
@@ -90,6 +93,7 @@ public class RoleController extends BaseController{
 	 * @param model
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/doqueryroles")
 	public ResponseJsonResult doqueryroles(HttpServletRequest httpServletRequest) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
@@ -112,6 +116,7 @@ public class RoleController extends BaseController{
 	 * @param httpServletRequest
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/doqueryusersbyrole")
 	public ResponseJsonResult doqueryusersbyrole(HttpServletRequest httpServletRequest) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
@@ -137,6 +142,7 @@ public class RoleController extends BaseController{
 	 * @param httpServletRequest
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/doqueryrolebyuser")
 	public ResponseJsonResult doqueryrolebyuser(HttpServletRequest httpServletRequest) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
@@ -162,6 +168,7 @@ public class RoleController extends BaseController{
 	 * @param httpServletRequest
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/dobind")
 	public ResponseJsonResult dobind(HttpServletRequest httpServletRequest) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();

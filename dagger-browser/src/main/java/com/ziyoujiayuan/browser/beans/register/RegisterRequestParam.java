@@ -24,6 +24,13 @@ public class RegisterRequestParam {
    @NotNull
    @NotEmpty
    private String name;
+   
+   /**
+    * 账号
+    */
+   @NotNull
+   @NotEmpty
+   private String account;
 
    /**
     * 密码

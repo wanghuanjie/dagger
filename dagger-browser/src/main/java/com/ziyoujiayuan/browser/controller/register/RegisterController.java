@@ -1,9 +1,10 @@
 package com.ziyoujiayuan.browser.controller.register;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ziyoujiayuan.browser.beans.register.RegisterRequestParam;
 import com.ziyoujiayuan.browser.cons.ResultMsgCons;
@@ -19,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
  * @Date 2017年10月13日
  */
 @Slf4j
-@RestController
+@Controller
 @RequestMapping("/register")
 public class RegisterController {
 
@@ -41,6 +42,7 @@ public class RegisterController {
 	 * @param model
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/doregister")
 	public ResponseJsonResult doregister(RegisterRequestParam registerRequestParam) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();

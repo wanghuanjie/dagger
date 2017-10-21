@@ -44,6 +44,11 @@
            <groupId>com.ziyoujiayuan</groupId>
 	       <artifactId>dagger-base</artifactId>
         </dependency>
+        	
+        	<dependency>
+           <groupId>com.ziyoujiayuan</groupId>
+	       <artifactId>dagger-api</artifactId>
+        </dependency>
 		
 		<dependency>
            <groupId>com.ziyoujiayuan</groupId>

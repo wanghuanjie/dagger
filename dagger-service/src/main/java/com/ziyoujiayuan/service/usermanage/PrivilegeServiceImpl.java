@@ -18,8 +18,8 @@ import com.ziyoujiayuan.data.enums.usermanage.RoleStatusEnum;
 import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.PrivilegeInfoBean;
 import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.PrivilegeInfoBeanExample;
 import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.RoleInfoBeanExample;
+import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.RolePrivilegeBean;
 import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.RolePrivilegeBeanExample;
-import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.RolePrivilegeBeanKey;
 import com.ziyoujiayuan.data.sql.mybaties.mapper.auto.usermanage.PrivilegeInfoBeanMapper;
 import com.ziyoujiayuan.data.sql.mybaties.mapper.auto.usermanage.RoleInfoBeanMapper;
 import com.ziyoujiayuan.data.sql.mybaties.mapper.auto.usermanage.RolePrivilegeBeanMapper;
@@ -151,13 +151,13 @@ public class PrivilegeServiceImpl extends BaseService implements PrivilegeServic
 		     RolePrivilegeBeanExample rolePrivilegeBeanExample = new RolePrivilegeBeanExample();
 		     rolePrivilegeBeanExample.createCriteria().andRoleIdEqualTo(roleId).andPrivilegeIdEqualTo(privilegeId);
 		     int relationshipSize = rolePrivilegeBeanMapper.selectByExample(rolePrivilegeBeanExample).size();
-		     RolePrivilegeBeanKey rolePrivilegeBeanKey = new RolePrivilegeBeanKey();
-		     rolePrivilegeBeanKey.setPrivilegeId(privilegeId);
-		     rolePrivilegeBeanKey.setRoleId(roleId);
+		     RolePrivilegeBean rolePrivilegeBean = new RolePrivilegeBean();
+		     rolePrivilegeBean.setPrivilegeId(privilegeId);
+		     rolePrivilegeBean.setRoleId(roleId);
 		     if (relationshipSize >= 1) {
-		         rolePrivilegeBeanMapper.deleteByPrimaryKey(rolePrivilegeBeanKey);
+		         rolePrivilegeBeanMapper.deleteByPrimaryKey(rolePrivilegeBean);
 			 } else {
-		         rolePrivilegeBeanMapper.insertSelective(rolePrivilegeBeanKey);
+		         rolePrivilegeBeanMapper.insertSelective(rolePrivilegeBean);
 
 			 }
 		}catch (AppException e) {
@@ -187,10 +187,10 @@ public class PrivilegeServiceImpl extends BaseService implements PrivilegeServic
 
 		     for(String privilegeId : privilegIds) {
 		    	     //TODO 1.批处理添加；2.验证权限的存在性；
-		    	     RolePrivilegeBeanKey rolePrivilegeBeanKey = new RolePrivilegeBeanKey();
-		    	     rolePrivilegeBeanKey.setRoleId(roleId);
-		    	     rolePrivilegeBeanKey.setPrivilegeId(Long.parseLong(privilegeId));
-			     rolePrivilegeBeanMapper.insertSelective(rolePrivilegeBeanKey);
+		    	     RolePrivilegeBean rolePrivilegeBean = new RolePrivilegeBean();
+		    	     rolePrivilegeBean.setRoleId(roleId);
+		    	     rolePrivilegeBean.setPrivilegeId(Long.parseLong(privilegeId));
+			     rolePrivilegeBeanMapper.insertSelective(rolePrivilegeBean);
 		     }
 		}catch (AppException e) {
 			// TODO: handle exception	

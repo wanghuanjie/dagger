@@ -3,6 +3,7 @@ package com.ziyoujiayuan.data.sql.mybaties.config;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -35,6 +36,11 @@ public class MybatiesConfig {
 		sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/mybaties/**/*.xml"));
 		
 		return sqlSessionFactoryBean.getObject();
+	}
+	
+	@Bean
+	public SqlSessionTemplate sqlSessionTemplate() throws Exception{
+		return new SqlSessionTemplate(sqlSessionFactoryBean());
 	}
 	
 	@Bean

@@ -34,7 +34,7 @@ public class RegisterServiceImpl implements RegisterService {
 		try {
 			// TODO Auto-generated method stub
 			UserInfoBeanExample userInfoBeanExample = new UserInfoBeanExample();
-			userInfoBeanExample.createCriteria().andNameEqualTo(userInfoBean.getName());
+			userInfoBeanExample.createCriteria().andAccountEqualTo(userInfoBean.getAccount());
 	        int size = userInfoBeanMapper.selectByExample(userInfoBeanExample).size();
 	        if (size >= 1) {
 				throw new AppException("用户已经存在,操作失误！");

@@ -16,7 +16,7 @@ public class CustomServletContainer implements EmbeddedServletContainerCustomize
 		configurableEmbeddedServletContainer.setPort(8100);
 	
 		configurableEmbeddedServletContainer.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,"/404.html"));
-		configurableEmbeddedServletContainer.addErrorPages(new ErrorPage(HttpStatus.EXPECTATION_FAILED,"/error.html"));
+		configurableEmbeddedServletContainer.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error.html"));
 	    configurableEmbeddedServletContainer.setSessionTimeout(1000,TimeUnit.MINUTES);
 	 
 	}

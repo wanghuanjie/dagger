@@ -9,15 +9,16 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ziyoujiayuan.api.demo.DemoService;
 import com.ziyoujiayuan.browser.beans.Person;
 import com.ziyoujiayuan.data.sql.mybaties.mapper.auto.usermanage.UserInfoBeanMapper;
+import com.ziyoujiayuan.web.annotation.Privilege;
 import com.ziyoujiayuan.web.param.ResponseJsonResult;
 
 /**
@@ -25,7 +26,7 @@ import com.ziyoujiayuan.web.param.ResponseJsonResult;
  * @Author wanghjbuf
  * @Date 2017年9月11日
  */
-@RestController
+@Controller
 @RequestMapping("/demo")
 public class DemoController {
  
@@ -98,7 +99,7 @@ public class DemoController {
 	 * @param model
 	 * @return
 	 */
-//	@ResponseBody
+	@ResponseBody
 	@RequestMapping("/dubbotest")
 	public ResponseJsonResult dubboTest(Model model) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
@@ -125,5 +126,19 @@ public class DemoController {
 	    map.put("success", true);
 	    map.put("msg", "6666");
 	    return map;
+	}
+	
+	/**
+	 * 权限测试
+	 * @return
+	 */
+	@Privilege(value="王焕杰第一次测试权限问题")
+	@ResponseBody
+	@RequestMapping("/privilegeTest")
+	public ResponseJsonResult privilegeTest() {
+		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
+		
+	    responseJsonResult.setMsg("操作成功");
+		return responseJsonResult;
 	}
 }

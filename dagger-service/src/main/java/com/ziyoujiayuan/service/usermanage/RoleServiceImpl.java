@@ -20,8 +20,8 @@ import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.RoleInfoBean;
 import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.RoleInfoBeanExample;
 import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.UserInfoBean;
 import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.UserInfoBeanExample;
+import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.UserRoleBean;
 import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.UserRoleBeanExample;
-import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.UserRoleBeanKey;
 import com.ziyoujiayuan.data.sql.mybaties.mapper.auto.usermanage.RoleInfoBeanMapper;
 import com.ziyoujiayuan.data.sql.mybaties.mapper.auto.usermanage.UserInfoBeanMapper;
 import com.ziyoujiayuan.data.sql.mybaties.mapper.auto.usermanage.UserRoleBeanMapper;
@@ -152,13 +152,13 @@ public class RoleServiceImpl extends BaseService implements RoleService {
 			userRoleBeanExample.createCriteria().andRoleIdEqualTo(roleId).andUserIdEqualTo(userId);
 			int size = userRoleBeanMapper.selectByExample(userRoleBeanExample).size();
 			
-			UserRoleBeanKey userRoleBeanKey = new UserRoleBeanKey();
-			userRoleBeanKey.setRoleId(roleId);
-			userRoleBeanKey.setUserId(userId);
+			UserRoleBean userRoleBean = new UserRoleBean();
+			userRoleBean.setRoleId(roleId);
+			userRoleBean.setUserId(userId);
 			if(size < 1) {
-			    userRoleBeanMapper.insertSelective(userRoleBeanKey);
+			    userRoleBeanMapper.insertSelective(userRoleBean);
 			}else {
-				userRoleBeanMapper.deleteByPrimaryKey(userRoleBeanKey);
+				userRoleBeanMapper.deleteByPrimaryKey(userRoleBean);
 			}			
 			
 		} catch (AppException e) {

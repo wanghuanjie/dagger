@@ -1,8 +1,9 @@
 package com.ziyoujiayuan.browser.controller.codetemplate;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ziyoujiayuan.web.param.ResponseJsonResult;
 
@@ -14,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
  * @Date 2017年10月18日
  */
 @Slf4j
-@RestController
+@Controller
 @RequestMapping("/template")
 public class CodeTemplateController {
 	
@@ -33,6 +34,7 @@ public class CodeTemplateController {
 	 * @param model
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/do")
 	public ResponseJsonResult dosome() {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();

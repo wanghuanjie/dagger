@@ -28,7 +28,7 @@
     <alibaba.dubbo.version>2.5.6</alibaba.dubbo.version>  
     <apache.zookeeper.version>3.4.9</apache.zookeeper.version>  
     <tec.zkclient.version>0.1</tec.zkclient.version> 
-    <projectlombok.lombok.version>1.16.10</projectlombok.lombok.version>
+    <projectlombok.lombok.version>1.16.18</projectlombok.lombok.version>
   </properties>
   
    <dependencyManagement>
@@ -85,7 +85,11 @@
   			<artifactId>lombok</artifactId>
  			<version>${projectlombok.lombok.version}</version>
 		</dependency>
-         
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.0</version>
+        </dependency>
      </dependencies>
    </dependencyManagement>
   

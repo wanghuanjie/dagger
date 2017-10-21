@@ -1,9 +1,15 @@
 package com.ziyoujiayuan.browser.controller.login;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ziyoujiayuan.browser.beans.login.LoginRequestParam;
 import com.ziyoujiayuan.browser.cons.ResultMsgCons;
 import com.ziyoujiayuan.browser.cons.ViewsBasePathCons;
 import com.ziyoujiayuan.browser.serve.usermanage.LoginServe;
@@ -16,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  * @Date 2017年10月13日
  */
 @Slf4j
-@RestController
+@Controller
 @RequestMapping("/login")
 public class LoginController {
 	
@@ -38,12 +44,14 @@ public class LoginController {
 	 * @param model
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/doin")
-	public ResponseJsonResult doin() {
+	public ResponseJsonResult doin(LoginRequestParam loginRequestParam,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
-			loginServe.login();
+			loginServe.login(loginRequestParam,httpServletRequest,httpServletResponse);
 			
+			httpServletResponse.sendRedirect("/");
 		    responseJsonResult.setMsg(ResultMsgCons.LOGIN_SUCCESS);
             responseJsonResult.setSuccess(true);
 		} catch (Exception e) {
@@ -59,13 +67,48 @@ public class LoginController {
 	 * @param model
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/doout")
-	public ResponseJsonResult doout() {
+	public ResponseJsonResult doout(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
-			loginServe.logout();
+			String sessionId = "";
+            Cookie[] cookies = httpServletRequest.getCookies();
+            for(Cookie item : cookies) {
+            	
+            	    if("dagger_token".equals(item.getName())) {
+            	    	   sessionId = item.getValue();
+            	    }
+            }
+			loginServe.logout(sessionId,httpServletResponse);
 			
 			responseJsonResult.setMsg(ResultMsgCons.LOGOUT_SUCCESS);
+            responseJsonResult.setSuccess(true);
+		} catch (Exception e) {
+			responseJsonResult.setMsg(e.getMessage());
+			responseJsonResult.setSuccess(false);
+			log.error(e.getMessage(),e);
+		}
+		return responseJsonResult;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getSessionObject")
+	public ResponseJsonResult getSession(HttpServletRequest httpServletRequest) {
+		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
+		try {
+			String sessionId = "";
+            Cookie[] cookies = httpServletRequest.getCookies();
+            for(Cookie item : cookies) {
+            	
+            	    if("dagger_token".equals(item.getName())) {
+            	    	   sessionId = item.getValue();
+            	    }
+            }
+            log.info(">>>>>>>>>:"+sessionId);
+            responseJsonResult.setData_collect(loginServe.getObjectForSession(sessionId));
+			
+			responseJsonResult.setMsg(ResultMsgCons.OPER_SUCCESS);
             responseJsonResult.setSuccess(true);
 		} catch (Exception e) {
 			responseJsonResult.setMsg(e.getMessage());

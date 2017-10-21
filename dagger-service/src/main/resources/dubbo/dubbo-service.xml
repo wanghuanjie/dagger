@@ -16,7 +16,10 @@
    <!--  <dubbo:protocol name="${dubbo.protocol.name}" port="${dubbo.protocol.port}" />   -->
       
    <dubbo:service interface="com.ziyoujiayuan.api.demo.DemoService" ref="com.ziyoujiayuan.service.demo.DemoServiceImpl" timeout="6000" />
-   <dubbo:service interface="com.ziyoujiayuan.api.usermanage.LoginService" ref="com.ziyoujiayuan.service.demo.DemoServiceImpl" timeout="6000" />
+   <dubbo:service interface="com.ziyoujiayuan.api.usermanage.LoginService" ref="com.ziyoujiayuan.service.usermanage.LoginServiceImpl" timeout="6000" />
    <dubbo:service interface="com.ziyoujiayuan.api.usermanage.RegisterService" ref="com.ziyoujiayuan.service.usermanage.RegisterServiceImpl" timeout="6000" />  
    <dubbo:service interface="com.ziyoujiayuan.api.usermanage.UserService" ref="com.ziyoujiayuan.service.usermanage.UserServiceImpl" timeout="6000" />
+   <dubbo:service interface="com.ziyoujiayuan.api.usermanage.PrivilegeService" ref="com.ziyoujiayuan.service.usermanage.PrivilegeServiceImpl" timeout="6000" />  
+   <dubbo:service interface="com.ziyoujiayuan.api.usermanage.RoleService" ref="com.ziyoujiayuan.service.usermanage.RoleServiceImpl" timeout="6000" />  
+
 </beans> 

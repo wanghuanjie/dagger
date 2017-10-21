@@ -5,9 +5,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ziyoujiayuan.base.exception.AppException;
 import com.ziyoujiayuan.browser.cons.ResultMsgCons;
@@ -25,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
  * @Date 2017年10月18日
  */
 @Slf4j
-@RestController
+@Controller
 @RequestMapping("/usermanage")
 public class UerController extends BaseController{
 	
@@ -47,6 +48,7 @@ public class UerController extends BaseController{
 	 * @param model
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/doquery")
 	public ResponseJsonResult doquery(HttpServletRequest request) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
@@ -70,6 +72,7 @@ public class UerController extends BaseController{
 	 * @param model
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/togglefreeze")
 	public ResponseJsonResult togglefreeze(HttpServletRequest request) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();

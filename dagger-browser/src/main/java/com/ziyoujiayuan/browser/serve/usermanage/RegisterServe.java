@@ -27,7 +27,8 @@ public class RegisterServe {
 	public void registerUserInfo(RegisterRequestParam registerRequestParam) throws AppException{
 		log.info("注册服务应用开始");
 		UserInfoBean userInfoBean = new UserInfoBean();
-		userInfoBean.setName(registerRequestParam.getName());
+		userInfoBean.setNickName(registerRequestParam.getName());
+		userInfoBean.setAccount(registerRequestParam.getAccount());
 		userInfoBean.setPassword(registerRequestParam.getPassword());
 		userInfoBean.setRealName(registerRequestParam.getRealName());
 		userInfoBean.setEmail(registerRequestParam.getEmail());
