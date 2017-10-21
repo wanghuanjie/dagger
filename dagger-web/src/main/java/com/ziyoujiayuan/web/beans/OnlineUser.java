@@ -1,5 +1,7 @@
 package com.ziyoujiayuan.web.beans;
 
+import java.io.Serializable;
+
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
@@ -13,8 +15,9 @@ import lombok.Data;
  * @Author wanghjbuf
  * @Date 2017年10月19日
  */
+@SuppressWarnings("serial")
 @Data
-public class OnlineUser {
+public class OnlineUser implements Serializable{
 	public static final String DAGGER_ONLINEUESER = "dagger_online_user";
 	
 	public static OnlineUser current() {

@@ -1,14 +1,12 @@
-package com.ziyoujiayuan.browser.controller;
+package com.ziyoujiayuan.test.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ziyoujiayuan.browser.cons.ViewsBasePathCons;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 首页
+ * 首页测试
  * @author wanghjbuf
  * @date 2017年10月16日
  */
@@ -23,7 +21,7 @@ public class IndexController {
 	 */
 	@RequestMapping("/")
 	public String index(){		
-		log.info("欢迎来到dagger的世界");
-		return ViewsBasePathCons.VIEWS_BASEPATH+"index";
+		log.info("欢迎来到daggerTest的世界");
+		return "views/index";
 	}
 }

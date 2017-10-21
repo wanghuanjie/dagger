@@ -101,5 +101,6 @@
     <module>dagger-core</module>
     <module>dagger-data</module>
     <module>dagger-base</module>
+    <module>dagger-test</module>
    </modules>
 </project>

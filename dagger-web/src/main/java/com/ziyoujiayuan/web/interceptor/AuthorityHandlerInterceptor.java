@@ -62,7 +62,9 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 		}
 		
 		if (null == OnlineUser.current().getUserBasicInfo()) {
-			currentOnlineUserFormCookies(arg0);
+			if (currentOnlineUserFormCookies(arg0)) {
+			   	return true;
+			} 
 		}
 		
 		HandlerMethod handlerMethod = (HandlerMethod) arg2;
@@ -88,17 +90,16 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 	 * @param httpServletRequest
 	 * @throws Exception
 	 */
-	public void currentOnlineUserFormCookies(HttpServletRequest httpServletRequest) throws Exception{
+	public boolean currentOnlineUserFormCookies(HttpServletRequest httpServletRequest) throws Exception{
 		Cookie[] cookies = httpServletRequest.getCookies();
 		if (cookies == null) {
-			return;
+			return true;
 		}
 		for (Cookie cookie : cookies) {
  			if ("dagger_token".equals(cookie.getName())) {
 				String token = cookie.getValue();
 				
 				UserBasicInfo userBasicInfo = loginService.getUserBasicInfo(token);
-				
 				if (userBasicInfo != null) {
 					OnlineUser.current().setUserBasicInfo(userBasicInfo);
 					OnlineUser.current().setSessionId(token);
@@ -106,8 +107,10 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 				} else {
 					// token已过期
 				}
+				return false;
 			}
 		}
+		return true;
 	}
 
 }
