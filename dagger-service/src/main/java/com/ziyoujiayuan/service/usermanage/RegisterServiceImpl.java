@@ -1,5 +1,7 @@
 package com.ziyoujiayuan.service.usermanage;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +44,10 @@ public class RegisterServiceImpl implements RegisterService {
 			
 			userInfoBean.setUserCo(UuidUtils.getUUID());
 			userInfoBean.setStatus(UserStatusEnum.NORMAL.name());
+			userInfoBean.setCreatTime(new Date());
+			userInfoBean.setCreator("system");
+			userInfoBean.setOperTime(new Date());
+			userInfoBean.setOpertor("system");
 			userInfoBeanMapper.insertSelective(userInfoBean);
 			
 			//TODO 默认角色以及默认权限

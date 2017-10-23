@@ -27,7 +27,7 @@ public class UserBasicInfo implements Serializable{
 	 */
 	public boolean containPrivilege(String privileges) {
 		
-		return true;
+		return false;
 	}
 	
 }
