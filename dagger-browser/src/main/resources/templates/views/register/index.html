@@ -2,9 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta content="text/html;charset=UTF-8" />
-<title>注册</title>
+<title>注册页面</title>
 </head>
 <body>
 
+<form action="doregister" method="post">
+  <p>用户名(账号): <input type="text" name="account" /></p>
+  <p>密码: <input type="password" name="password" /></p>
+  <p>电子邮件: <input type="text" name="email" /></p>
+  <p>性别: <label><input name="gender" type="radio" value="MALE" />男</label>
+          <label><input name="gender" type="radio" value="FEMALE" />女</label>
+  </p>
+  <input type="submit" value="注册" />
+</form>
 </body>
 </html>

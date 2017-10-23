@@ -17,16 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @SuppressWarnings("unused")
 public class RegisterRequestParam {
-
-   /**
-    * 用户名
-    */
-   @NotNull
-   @NotEmpty
-   private String name;
    
    /**
-    * 账号
+    * 账号(用户名)
     */
    @NotNull
    @NotEmpty
@@ -51,10 +44,4 @@ public class RegisterRequestParam {
     * 性别
     */
    private String gender;
-   
-   /**
-    * 真实名称
-    */
-   private String realName;
-
 }

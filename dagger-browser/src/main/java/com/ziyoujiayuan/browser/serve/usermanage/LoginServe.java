@@ -42,6 +42,8 @@ public class LoginServe {
 		
 		String dagger_token = loginService.doLogin(userInfoBean);
 		Cookie cookie = new Cookie("dagger_token", dagger_token);
+		cookie.setPath("/");
+
 		httpServletResponse.addCookie(cookie);
 		OnlineUser.clean();
 

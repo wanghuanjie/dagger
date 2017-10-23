@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,6 +24,7 @@ import com.ziyoujiayuan.web.cons.OnlineUserTypeEnum;
  * @Author wanghjbuf
  * @Date 2017年10月19日
  */
+@Component
 public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 	
 	@Qualifier("com.ziyoujiayuan.service.usermanage.LoginServiceImpl")
@@ -61,39 +63,77 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 			return true;
 		}
 		
-		if (null == OnlineUser.current().getUserBasicInfo()) {
-			if (currentOnlineUserFormCookies(arg0)) {
-			   	return true;
-			} 
-		}
-		
 		HandlerMethod handlerMethod = (HandlerMethod) arg2;
 		Method method = handlerMethod.getMethod();
 		Privilege privilege = method.getAnnotation(Privilege.class);
 		
-		if (privilege != null) {			
-			UserBasicInfo currentUser = OnlineUser.current().getUserBasicInfo();
-			if (currentUser == null) {
+		if (null == OnlineUser.current().getUserBasicInfo()) {
+			System.out.println("1");
+			//先登录再判断
+			if (currentOnlineUserFormCookies(arg0)) {
+				if (privilege != null) {		
+					System.out.println("1-1");
+					UserBasicInfo currentUser = OnlineUser.current().getUserBasicInfo();
+					if (currentUser == null) {
+						System.out.println("1-2");
+						arg1.sendRedirect("/login/index");
+						return false;
+					} else if(currentUser != null && ! currentUser.containPrivilege(privilege.value())) {
+						System.out.println("1-3");
+						arg1.sendRedirect("/403.html");
+						return false;
+					} else {
+						System.out.println("1-4");
+						return true;
+					}
+				} else {
+					System.out.println("1-5");
+					return true;
+				}
+				
+			} else if(!currentOnlineUserFormCookies(arg0) && privilege != null){
+				System.out.println("1-6");
 				arg1.sendRedirect("/login/index");
 				return false;
-			} else if(currentUser != null && ! currentUser.containPrivilege(privilege.value())) {
-				arg1.sendRedirect("/403.html");
-				return false;
-			} 
+			} else {
+				System.out.println("1-7");
+				return true;
+			}
+		} else {
+			System.out.println("2");
+			//直接判断
+			if (privilege != null) {		
+				System.out.println("2-1");
+				UserBasicInfo currentUser = OnlineUser.current().getUserBasicInfo();
+				if (currentUser == null) {
+					System.out.println("2-2");
+					arg1.sendRedirect("/login/index");
+					return false;
+				} else if(currentUser != null && ! currentUser.containPrivilege(privilege.value())) {
+					System.out.println("2-3");
+					arg1.sendRedirect("/403.html");
+					return false;
+				} else {
+					System.out.println("2-4");
+					return true;
+				}
+			} else {
+				System.out.println("2-5");
+				return true;
+			}
 		}
-		
-		return true;
 	}
 	
 	/**
 	 * 从Cookies中获取登录对象
 	 * @param httpServletRequest
+	 * @return 是否存在
 	 * @throws Exception
 	 */
 	public boolean currentOnlineUserFormCookies(HttpServletRequest httpServletRequest) throws Exception{
 		Cookie[] cookies = httpServletRequest.getCookies();
 		if (cookies == null) {
-			return true;
+			return false;
 		}
 		for (Cookie cookie : cookies) {
  			if ("dagger_token".equals(cookie.getName())) {
@@ -104,13 +144,14 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 					OnlineUser.current().setUserBasicInfo(userBasicInfo);
 					OnlineUser.current().setSessionId(token);
 					OnlineUser.current().setType(OnlineUserTypeEnum.USER.name());
+					return true;
 				} else {
 					// token已过期
+					return false;
 				}
-				return false;
 			}
 		}
-		return true;
+		return false;
 	}
 
 }
