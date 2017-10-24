@@ -1,6 +1,5 @@
 package com.ziyoujiayuan.browser.controller.login;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +13,7 @@ import com.ziyoujiayuan.browser.cons.ResultMsgCons;
 import com.ziyoujiayuan.browser.cons.ViewsBasePathCons;
 import com.ziyoujiayuan.browser.serve.usermanage.LoginServe;
 import com.ziyoujiayuan.web.param.ResponseJsonResult;
+import com.ziyoujiayuan.web.utils.CookiesUtils;
 
 import lombok.extern.slf4j.Slf4j;
 /**
@@ -72,15 +72,7 @@ public class LoginController {
 	public ResponseJsonResult doout(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
-			String sessionId = "";
-            Cookie[] cookies = httpServletRequest.getCookies();
-            for(Cookie item : cookies) {
-            	
-            	    if("dagger_token".equals(item.getName())) {
-            	    	   sessionId = item.getValue();
-            	    }
-            }
-			loginServe.logout(sessionId,httpServletResponse);
+			loginServe.logout(httpServletRequest,httpServletResponse);
 			
 			responseJsonResult.setMsg(ResultMsgCons.LOGOUT_SUCCESS);
             responseJsonResult.setSuccess(true);
@@ -97,17 +89,9 @@ public class LoginController {
 	public ResponseJsonResult getSession(HttpServletRequest httpServletRequest) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
-			String sessionId = "";
-            Cookie[] cookies = httpServletRequest.getCookies();
-            for(Cookie item : cookies) {
-            	
-            	    if("dagger_token".equals(item.getName())) {
-            	    	   sessionId = item.getValue();
-            	    }
-            }
-            log.info(">>>>>>>>>:"+sessionId);
-            responseJsonResult.setData_collect(loginServe.getObjectForSession(sessionId));
+			String sessionId = CookiesUtils.getTokenIdFromCookies(httpServletRequest);
 			
+            responseJsonResult.setData_collect(loginServe.getObjectForSession(sessionId));
 			responseJsonResult.setMsg(ResultMsgCons.OPER_SUCCESS);
             responseJsonResult.setSuccess(true);
 		} catch (Exception e) {
