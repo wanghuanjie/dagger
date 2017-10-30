@@ -1,7 +1,7 @@
 # dagger
 
 公告：<br/>
-Dagger, remove the most redundant cancer of the enterprise, make programming easier!致力与企业开发最冗余的部门，提供更佳简单的解决方案<br/>
+Dagger, remove the most redundant cancer of the enterprise, make programming easier!致力于简化企业开发最冗余的部分，提供更佳简单的解决方案<br/>
 
 声明：<br/>
 框架处于调试阶段，出现的纰漏以及相关的疑问，请及时与作者沟通，期待在开发的过程中结识有趣的你。<br/>
