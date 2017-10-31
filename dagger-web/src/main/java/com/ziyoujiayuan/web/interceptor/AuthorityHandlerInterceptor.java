@@ -76,11 +76,11 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 					UserBasicInfo currentUser = OnlineUser.current().getUserBasicInfo();
 					if (currentUser == null) {
 						System.out.println("1-2");
-						arg1.sendRedirect("/login/index");
+						arg1.sendRedirect("/login/fail");
 						return false;
 					} else if(currentUser != null && ! currentUser.containPrivilege(privilege.value())) {
 						System.out.println("1-3");
-						arg1.sendRedirect("/403.html");
+						arg1.sendRedirect("/error/403");
 						return false;
 					} else {
 						System.out.println("1-4");
@@ -93,7 +93,7 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 				
 			} else if(!currentOnlineUserFormCookies(arg0) && privilege != null){
 				System.out.println("1-6");
-				arg1.sendRedirect("/login/index");
+				arg1.sendRedirect("/login/fail");
 				return false;
 			} else {
 				System.out.println("1-7");
@@ -107,11 +107,11 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 				UserBasicInfo currentUser = OnlineUser.current().getUserBasicInfo();
 				if (currentUser == null) {
 					System.out.println("2-2");
-					arg1.sendRedirect("/login/index");
+					arg1.sendRedirect("/login/fail");
 					return false;
 				} else if(currentUser != null && ! currentUser.containPrivilege(privilege.value())) {
 					System.out.println("2-3");
-					arg1.sendRedirect("/403.html");
+					arg1.sendRedirect("/error/403");
 					return false;
 				} else {
 					System.out.println("2-4");

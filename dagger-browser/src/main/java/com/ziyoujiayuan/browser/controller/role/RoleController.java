@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ziyoujiayuan.base.exception.AppException;
 import com.ziyoujiayuan.browser.beans.role.RoleRequestParam;
-import com.ziyoujiayuan.browser.cons.ResultMsgCons;
 import com.ziyoujiayuan.browser.cons.ViewsBasePathCons;
 import com.ziyoujiayuan.browser.serve.usermanage.RoleServe;
+import com.ziyoujiayuan.web.cons.ResultMsgCons;
 import com.ziyoujiayuan.web.base.BaseController;
 import com.ziyoujiayuan.web.param.ResponseJsonResult;
 import com.ziyoujiayuan.web.utils.ParamUtils;

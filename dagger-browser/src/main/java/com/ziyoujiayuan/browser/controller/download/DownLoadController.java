@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ziyoujiayuan.browser.cons.ResultMsgCons;
+import com.ziyoujiayuan.web.cons.ResultMsgCons;
 import com.ziyoujiayuan.web.param.ResponseJsonResult;
 
 import lombok.extern.slf4j.Slf4j;

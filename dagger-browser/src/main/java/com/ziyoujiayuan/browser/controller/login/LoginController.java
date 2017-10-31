@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ziyoujiayuan.browser.beans.login.LoginRequestParam;
-import com.ziyoujiayuan.browser.cons.ResultMsgCons;
 import com.ziyoujiayuan.browser.cons.ViewsBasePathCons;
 import com.ziyoujiayuan.browser.serve.usermanage.LoginServe;
+import com.ziyoujiayuan.web.cons.ResultMsgCons;
 import com.ziyoujiayuan.web.param.ResponseJsonResult;
 import com.ziyoujiayuan.web.utils.CookiesUtils;
 
@@ -37,6 +37,26 @@ public class LoginController {
 	@RequestMapping("/index")
 	public String in() {
 		return ViewsBasePathCons.VIEWS_BASEPATH+"login/index";
+	}
+	
+	/**
+	 * 登录功能失败
+	 * @param model
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/fail")
+	public ResponseJsonResult fail() {
+		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
+		try {			
+		    responseJsonResult.setMsg(ResultMsgCons.NO_LOGIN);
+            responseJsonResult.setSuccess(false);
+		} catch (Exception e) {
+			responseJsonResult.setMsg(e.getMessage());
+			responseJsonResult.setSuccess(false);
+			log.error(e.getMessage(),e);
+		}
+		return responseJsonResult;
 	}
 	
 	/**

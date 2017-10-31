@@ -13,8 +13,8 @@ public class CustomServletContainer implements EmbeddedServletContainerCustomize
 
 	@Override 
 	public void customize(ConfigurableEmbeddedServletContainer configurableEmbeddedServletContainer) {	
-		configurableEmbeddedServletContainer.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,"/404.html"));
-		configurableEmbeddedServletContainer.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error.html"));
+		configurableEmbeddedServletContainer.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,"/error/404"));
+		configurableEmbeddedServletContainer.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error"));
 	    configurableEmbeddedServletContainer.setSessionTimeout(1000,TimeUnit.MINUTES);
 	 
 	}
