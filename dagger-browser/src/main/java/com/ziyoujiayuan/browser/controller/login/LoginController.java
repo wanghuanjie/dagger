@@ -71,7 +71,7 @@ public class LoginController {
 		try {
 			loginServe.login(loginRequestParam,httpServletRequest,httpServletResponse);
 			
-			httpServletResponse.sendRedirect("/");
+//			httpServletResponse.sendRedirect("/");
 		    responseJsonResult.setMsg(ResultMsgCons.LOGIN_SUCCESS);
             responseJsonResult.setSuccess(true);
 		} catch (Exception e) {
@@ -105,7 +105,7 @@ public class LoginController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/getSessionObject")
+	@RequestMapping("/currentUserInfo")
 	public ResponseJsonResult getSession(HttpServletRequest httpServletRequest) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {

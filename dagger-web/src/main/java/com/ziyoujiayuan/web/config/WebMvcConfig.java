@@ -6,6 +6,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.ziyoujiayuan.web.interceptor.AuthorityHandlerInterceptor;
+import com.ziyoujiayuan.web.interceptor.CrossDomainInterceptor;
 
 /**
  * mvc-config
@@ -17,10 +18,15 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
 	
 	@Autowired
 	AuthorityHandlerInterceptor authorityHandlerInterceptor;
+	@Autowired
+	CrossDomainInterceptor crossDomainInterceptor;
 	
 	@Override
     public void addInterceptors(InterceptorRegistry registry) {  
-        registry.addInterceptor(authorityHandlerInterceptor).addPathPatterns("/**");  
+        registry.addInterceptor(crossDomainInterceptor).addPathPatterns("/**");  
+        registry.addInterceptor(authorityHandlerInterceptor).addPathPatterns("/**"); 
+        
+        super.addInterceptors(registry);
     } 
 
 }

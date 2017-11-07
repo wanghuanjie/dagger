@@ -14,7 +14,7 @@
     <result column="privilege_url" jdbcType="VARCHAR" property="privilegeUrl" />
     <result column="parent_id" jdbcType="BIGINT" property="parentId" />
   </resultMap>
-  <select id="selectPrivilegeByUserId" parameterType="java.util.Map" resultMap="BaseResultMap">
+  <select id="selectPrivilegeByUserId" resultMap="BaseResultMap">
         select p.privilege_id          as           privilege_id,
                p.privilege_dec         as           privilege_dec,
                p.privilege_name        as           privilege_name,

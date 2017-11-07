@@ -93,7 +93,7 @@ public class PrivilegeServiceImpl extends BaseService implements PrivilegeServic
 	public Pager doQueryPrivileges(Map<String, Object> param) throws AppException{
 		// TODO Auto-generated method stub
         try {
-			return queryForPager("", param);
+			return queryForPager("com.ziyoujiayuan.data.sql.mybaties.mapper.def.usermanage.PrivilegeServiceMapper.selectPrivileges", param);
 		} catch (Exception e) {
 			// TODO: handle exception
 	    	    throw new AppException(GeneralExceptionCons.BASE_ERRO_MSG,e);

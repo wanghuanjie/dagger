@@ -27,7 +27,7 @@ public class UserServiceImpl extends BaseService implements UserService{
 	public Pager doQueryUsers(Map<String, Object> param) throws AppException {
 		// TODO Auto-generated method stub
         try {
-			return queryForPager("", param);
+			return queryForPager("com.ziyoujiayuan.data.sql.mybaties.mapper.def.usermanage.UserServiceMapper.selectUsers", param);
 		} catch (Exception e) {
 			// TODO: handle exception
 	    	    throw new AppException(GeneralExceptionCons.BASE_ERRO_MSG,e);
@@ -41,6 +41,12 @@ public class UserServiceImpl extends BaseService implements UserService{
 	@Override
 	public void doToggleFreeze(long userId) throws AppException {
 		// TODO Auto-generated method stub
+		try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+    	        throw new AppException(GeneralExceptionCons.BASE_ERRO_MSG,e);
+		}
 
 	}
 

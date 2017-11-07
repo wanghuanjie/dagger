@@ -90,7 +90,7 @@ public class RoleServiceImpl extends BaseService implements RoleService {
 	public Pager doQueryRoles(Map<String, Object> param) throws AppException {
 		// TODO Auto-generated method stub
         try {
-			return queryForPager("", param);
+			return queryForPager("com.ziyoujiayuan.data.sql.mybaties.mapper.def.usermanage.RoleServiceMapper.selectRoles", param);        	    
 		} catch (Exception e) {
 			// TODO: handle exception
 	    	    throw new AppException(GeneralExceptionCons.BASE_ERRO_MSG,e);
