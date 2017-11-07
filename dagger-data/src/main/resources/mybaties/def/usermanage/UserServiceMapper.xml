@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ziyoujiayuan.data.sql.mybaties.mapper.def.usermanage.UserServiceMapper">
+  <select id="selectUsers" resultType="java.util.Map">
+        select 
+             t.user_id              as            user_id,
+             t.email                as            email,
+             t.gender               as            gender,   
+             t.nick_name            as            nick_name,
+             t.real_name            as            real_name,
+             t.user_co              as            user_co,
+             t.status               as            status,
+             t.creat_time           as            creat_time,
+             t.creator              as            creator,
+             t.oper_time            as            oper_time,
+             t.opertor              as            opertor
+        from t_user_info t
+    order by t.user_id,desc 
+  </select>
+  <select id="selectUsers_count" resultType="int">
+        select count(1)
+        from t_user_info t
+  </select>
+</mapper>

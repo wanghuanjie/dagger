@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ziyoujiayuan.data.sql.mybaties.mapper.def.usermanage.RoleServiceMapper">
+  <sql id="selectRoles_where">
+       <trim prefix="where" prefixOverrides="and|or">  
+            <if test="role_id!=null">  
+                AND t.role_id = #{role_id}  
+            </if>   
+            <if test="privilege_name!=null">  
+                AND t.role_name like #{role_name}  
+            </if>  
+        </trim>
+  </sql>
+
+  <select id="selectRoles" resultType="java.util.Map">
+        select 
+             role_id                as            role_id,
+             role_dec               as            role_desc,
+             role_name              as            role_name,
+             role_co                as            role_co,
+             t.status               as            status,
+             t.creat_time           as            creat_time,
+             t.creator              as            creator,
+             t.oper_time            as            oper_time,
+             t.opertor              as            opertor
+        from t_role_info t
+        <include refid="selectRoles_where"/>
+    order by t.role_id,desc 
+  </select>
+  <select id="selectRoles_count" resultType="int">
+        select count(1)
+        from t_role_info t
+        <include refid="selectRoles_where"/>
+  </select>
+</mapper>
