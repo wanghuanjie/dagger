@@ -15,7 +15,7 @@
              t.oper_time            as            oper_time,
              t.opertor              as            opertor
         from t_user_info t
-    order by t.user_id,desc 
+    order by t.user_id desc 
   </select>
   <select id="selectUsers_count" resultType="int">
         select count(1)

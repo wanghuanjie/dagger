@@ -28,7 +28,7 @@
              t.opertor              as            opertor
         from t_privilege_info t
         <include refid="selectPrivileges_where"/>
-    order by t.privilege_id,desc 
+    order by t.privilege_id desc 
   </select>
   <select id="selectPrivileges_count" resultType="int">
         select count(1)

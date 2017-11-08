@@ -34,7 +34,7 @@ public class LoginServe {
 	 * 登录相关操作
 	 * @throws AppException
 	 */
-	public void login(LoginRequestParam loginRequestParam,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws AppException{
+	public UserBasicInfo login(LoginRequestParam loginRequestParam,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws AppException{
 		log.info("login");
 		UserInfoBean userInfoBean = new UserInfoBean();
 		userInfoBean.setAccount(loginRequestParam.getAccount());
@@ -45,6 +45,7 @@ public class LoginServe {
 		String dagger_token = loginService.doLogin(userInfoBean);
 		httpServletResponse.addCookie(CookiesUtils.addCookie(dagger_token));
 
+		return loginService.getUserBasicInfo(dagger_token);
 	}
 	
 	/**

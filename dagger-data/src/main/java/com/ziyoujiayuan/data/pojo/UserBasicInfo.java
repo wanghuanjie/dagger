@@ -16,6 +16,9 @@ public class UserBasicInfo implements Serializable{
 
 	private long userId;
 	private String userName;
+	private String account;
+	private String email;
+
 	private long roleId;
 	private String roleName;
 	private Set<PrivilegeBasicInfo> privileges;

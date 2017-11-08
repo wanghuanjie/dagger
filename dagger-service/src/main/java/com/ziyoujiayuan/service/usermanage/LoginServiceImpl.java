@@ -74,6 +74,8 @@ public class LoginServiceImpl extends BaseService implements LoginService {
 			userBasicInfo.setUserId(currentUserInfo.getUserId());
 			userBasicInfo.setUserName(currentUserInfo.getNickName());
 			userBasicInfo.setRoleName(currentUserInfo.getRealName());
+			userBasicInfo.setAccount(currentUserInfo.getAccount());
+			userBasicInfo.setEmail(currentUserInfo.getEmail());
 			
 			UserRoleBeanExample userRoleBeanExample = new UserRoleBeanExample();
 			userRoleBeanExample.createCriteria().andUserIdEqualTo(currentUserInfo.getUserId());

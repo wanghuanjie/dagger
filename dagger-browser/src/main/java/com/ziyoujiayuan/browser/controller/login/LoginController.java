@@ -69,9 +69,8 @@ public class LoginController {
 	public ResponseJsonResult doin(LoginRequestParam loginRequestParam,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
-			loginServe.login(loginRequestParam,httpServletRequest,httpServletResponse);
 			
-//			httpServletResponse.sendRedirect("/");
+			responseJsonResult.setData_collect(loginServe.login(loginRequestParam,httpServletRequest,httpServletResponse));			
 		    responseJsonResult.setMsg(ResultMsgCons.LOGIN_SUCCESS);
             responseJsonResult.setSuccess(true);
 		} catch (Exception e) {

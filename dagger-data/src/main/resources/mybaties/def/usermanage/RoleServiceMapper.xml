@@ -25,7 +25,7 @@
              t.opertor              as            opertor
         from t_role_info t
         <include refid="selectRoles_where"/>
-    order by t.role_id,desc 
+    order by t.role_id desc 
   </select>
   <select id="selectRoles_count" resultType="int">
         select count(1)
