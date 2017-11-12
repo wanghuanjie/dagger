@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.ziyoujiayuan.base.datapager.Pager;
 import com.ziyoujiayuan.base.exception.AppException;
+import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.UserInfoBean;
 
 /**
  * 用户管理接口
@@ -26,5 +27,20 @@ public interface UserService {
 	 * @throws AppException
 	 */
 	public void doToggleFreeze(long userId) throws AppException; 
+	
+	/**
+	 * 更新用户
+	 * @param userInfoBean
+	 * @throws AppException
+	 */
+    public void doUpdate(UserInfoBean userInfoBean) throws AppException;
+    
+    /**
+     * 修改密码
+     * @param userId
+     * @param password
+     * @throws AppException
+     */
+    public void doChangePwd(long userId, String password) throws AppException;
 	
 }

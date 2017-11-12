@@ -65,7 +65,7 @@ public class LoginServiceImpl extends BaseService implements LoginService {
 	        
 			List<UserInfoBean> userInfoBeans = userInfoBeanMapper.selectByExample(userInfoBeanExample);
 			if (userInfoBeans.size() < 1) {
-				throw new AppException("用户账号不存在，操作失败！");
+				throw new AppException("用户或者账号不正确,操作失败！");
 			}
 			
 			UserInfoBean currentUserInfo = userInfoBeans.get(0);

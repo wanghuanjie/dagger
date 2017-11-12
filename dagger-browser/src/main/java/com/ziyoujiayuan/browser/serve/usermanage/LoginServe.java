@@ -39,9 +39,7 @@ public class LoginServe {
 		UserInfoBean userInfoBean = new UserInfoBean();
 		userInfoBean.setAccount(loginRequestParam.getAccount());
 		userInfoBean.setPassword(loginRequestParam.getPassword());
-		
-		System.out.println("lllllll:"+loginRequestParam.getAccount()+";>>>>"+loginRequestParam.getPassword());
-		
+				
 		String dagger_token = loginService.doLogin(userInfoBean);
 		httpServletResponse.addCookie(CookiesUtils.addCookie(dagger_token));
 

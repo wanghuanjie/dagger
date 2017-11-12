@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ziyoujiayuan.base.exception.AppException;
+import com.ziyoujiayuan.browser.beans.user.UserRequestParam;
 import com.ziyoujiayuan.browser.cons.ViewsBasePathCons;
 import com.ziyoujiayuan.browser.serve.usermanage.UserServe;
 import com.ziyoujiayuan.web.cons.ResultMsgCons;
@@ -83,6 +84,57 @@ public class UerController extends BaseController{
 			}
 			
             userServe.toggleFreeze(userId);			
+		    responseJsonResult.setMsg(ResultMsgCons.OPER_SUCCESS);
+            responseJsonResult.setSuccess(true);
+		} catch (Exception e) {
+			responseJsonResult.setMsg(e.getMessage());
+			responseJsonResult.setSuccess(false);
+			log.error(e.getMessage(),e);
+		}
+		return responseJsonResult;
+	}
+	
+	/**
+	 * 用户更新
+	 * @param userRequestParam
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/doupdate")
+	public ResponseJsonResult doupdate(UserRequestParam userRequestParam) {
+		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
+		try {
+			
+            userServe.update(userRequestParam);			
+		    responseJsonResult.setMsg(ResultMsgCons.OPER_SUCCESS);
+            responseJsonResult.setSuccess(true);
+		} catch (Exception e) {
+			responseJsonResult.setMsg(e.getMessage());
+			responseJsonResult.setSuccess(false);
+			log.error(e.getMessage(),e);
+		}
+		return responseJsonResult;
+	}
+	
+	/**
+	 * 修改密码
+	 * @param userId
+	 * @param password
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/dochangepwd")
+	public ResponseJsonResult dochangepwd(long userId, String password) {
+		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
+		try {
+			if (0 >= userId) {
+				throw new AppException("用户ID不能为空,操作失败!");
+			}
+			if ("".equals(password)) {
+				throw new AppException("密码不能为空,操作失败!");
+			}
+			
+			userServe.changePwd(userId, password);
 		    responseJsonResult.setMsg(ResultMsgCons.OPER_SUCCESS);
             responseJsonResult.setSuccess(true);
 		} catch (Exception e) {
