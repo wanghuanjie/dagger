@@ -19,11 +19,14 @@ import com.ziyoujiayuan.web.annotation.Privilege;
 import com.ziyoujiayuan.web.beans.OnlineUser;
 import com.ziyoujiayuan.web.cons.OnlineUserTypeEnum;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 权限拦截器
  * @Author wanghjbuf
  * @Date 2017年10月19日
  */
+@Slf4j
 @Component
 public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 	
@@ -68,57 +71,47 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 		Privilege privilege = method.getAnnotation(Privilege.class);
 		
 		if (null == OnlineUser.current().getUserBasicInfo()) {
-			System.out.println("1");
-			//先登录再判断
+             log.info("OnlinuUser is empty");
+ 			//先登录再判断
 			if (currentOnlineUserFormCookies(arg0)) {
 				if (privilege != null) {		
-					System.out.println("1-1");
+
 					UserBasicInfo currentUser = OnlineUser.current().getUserBasicInfo();
 					if (currentUser == null) {
-						System.out.println("1-2");
 						arg1.sendRedirect("/login/fail");
 						return false;
 					} else if(currentUser != null && ! currentUser.containPrivilege(privilege.value())) {
-						System.out.println("1-3");
 						arg1.sendRedirect("/error/403");
 						return false;
 					} else {
-						System.out.println("1-4");
 						return true;
 					}
 				} else {
-					System.out.println("1-5");
 					return true;
 				}
 				
 			} else if(!currentOnlineUserFormCookies(arg0) && privilege != null){
-				System.out.println("1-6");
 				arg1.sendRedirect("/login/fail");
 				return false;
 			} else {
-				System.out.println("1-7");
 				return true;
 			}
 		} else {
-			System.out.println("2");
+			log.info("OnlineUser is notEmupty!");
 			//直接判断
 			if (privilege != null) {		
-				System.out.println("2-1");
+
 				UserBasicInfo currentUser = OnlineUser.current().getUserBasicInfo();
 				if (currentUser == null) {
-					System.out.println("2-2");
 					arg1.sendRedirect("/login/fail");
 					return false;
 				} else if(currentUser != null && ! currentUser.containPrivilege(privilege.value())) {
-					System.out.println("2-3");
 					arg1.sendRedirect("/error/403");
 					return false;
 				} else {
-					System.out.println("2-4");
 					return true;
 				}
 			} else {
-				System.out.println("2-5");
 				return true;
 			}
 		}

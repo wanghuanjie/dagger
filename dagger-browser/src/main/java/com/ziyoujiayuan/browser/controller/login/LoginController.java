@@ -103,6 +103,11 @@ public class LoginController {
 		return responseJsonResult;
 	}
 	
+	/**
+	 * 获取用户信息
+	 * @param httpServletRequest
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("/currentUserInfo")
 	public ResponseJsonResult getSession(HttpServletRequest httpServletRequest) {

@@ -18,4 +18,5 @@
     <dubbo:reference id="com.ziyoujiayuan.service.usermanage.RegisterServiceImpl" interface="com.ziyoujiayuan.api.usermanage.RegisterService" /> 
     <dubbo:reference id="com.ziyoujiayuan.service.usermanage.UserServiceImpl" interface="com.ziyoujiayuan.api.usermanage.UserService" /> 
     <dubbo:reference id="com.ziyoujiayuan.service.usermanage.RoleServiceImpl" interface="com.ziyoujiayuan.api.usermanage.RoleService" />  
+    <dubbo:reference id="com.ziyoujiayuan.service.usermanage.StatisticsServiceImpl" interface="com.ziyoujiayuan.api.usermanage.StatisticsService" />  
 </beans>

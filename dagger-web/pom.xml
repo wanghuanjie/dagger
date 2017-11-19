@@ -54,5 +54,10 @@
            <groupId>com.ziyoujiayuan</groupId>
 	       <artifactId>dagger-data</artifactId>
         </dependency>
+        
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
 	</dependencies>
 </project>

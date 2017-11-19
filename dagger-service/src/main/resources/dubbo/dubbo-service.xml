@@ -21,5 +21,6 @@
    <dubbo:service interface="com.ziyoujiayuan.api.usermanage.UserService" ref="com.ziyoujiayuan.service.usermanage.UserServiceImpl" timeout="6000" />
    <dubbo:service interface="com.ziyoujiayuan.api.usermanage.PrivilegeService" ref="com.ziyoujiayuan.service.usermanage.PrivilegeServiceImpl" timeout="6000" />  
    <dubbo:service interface="com.ziyoujiayuan.api.usermanage.RoleService" ref="com.ziyoujiayuan.service.usermanage.RoleServiceImpl" timeout="6000" />  
+   <dubbo:service interface="com.ziyoujiayuan.api.usermanage.StatisticsService" ref="com.ziyoujiayuan.service.usermanage.StatisticsServiceImpl" timeout="6000" />  
 
 </beans> 

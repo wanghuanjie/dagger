@@ -40,13 +40,15 @@ import com.ziyoujiayuan.service.base.BaseService;
  */
 @Service("com.ziyoujiayuan.service.usermanage.LoginServiceImpl")
 public class LoginServiceImpl extends BaseService implements LoginService {
-
+	
 	@Autowired
 	UserInfoBeanMapper userInfoBeanMapper;
 	@Autowired
 	UserRoleBeanMapper userRoleBeanMapper;
 	@Autowired
 	RedisTemplate<String,String> redisTemplate;
+	@Value("${dagger.token.prefix}")
+	private String daggerTokenPrefix;
 	@Value("${dagger.session.maxsurvival}")
 	private long sessionMaxsurvival;
 	
@@ -121,12 +123,14 @@ public class LoginServiceImpl extends BaseService implements LoginService {
 			}
 			userBasicInfo.setPrivileges(privileges);	
 			
-			String dagger_token = UuidUtils.getUUID();
+			StringBuffer dagger_token = new StringBuffer(daggerTokenPrefix);
+			dagger_token.append(UuidUtils.getUUID());
+			
 			if (sessionMaxsurvival == 0) sessionMaxsurvival = 180L;
 	        Gson gson = new Gson();
-	        redisTemplate.opsForValue().set(dagger_token, gson.toJson(userBasicInfo), sessionMaxsurvival,TimeUnit.SECONDS);
+	        redisTemplate.opsForValue().set(dagger_token.toString(), gson.toJson(userBasicInfo), sessionMaxsurvival,TimeUnit.SECONDS);
 
-			return dagger_token;
+			return dagger_token.toString();
 		} catch (AppException e) {
 			// TODO: handle exception
 			throw e;
