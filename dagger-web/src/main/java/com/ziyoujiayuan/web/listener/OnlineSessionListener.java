@@ -30,12 +30,12 @@ public class OnlineSessionListener implements HttpSessionListener {
 			Gson gson = new Gson();
 			//记录累计用户,待优化
 			long total_visit_user_count= 0L;
-			String total_visit_user = redisTemplate.opsForValue().get("total_visit_user").toString();
-			if(null != total_visit_user && !"".equals(redisTemplate.opsForValue().get("total_visit_user"))) {
-				total_visit_user_count = Long.parseLong(total_visit_user);
+			Object total_visit_user = redisTemplate.opsForValue().get("total_visit_user");
+			if(null != total_visit_user) {
+				total_visit_user_count = Long.parseLong(total_visit_user.toString());
 			}
 			
-			redisTemplate.opsForValue().set("total_visit_user", gson.toJson(total_visit_user_count+1+""));
+			redisTemplate.opsForValue().set("total_visit_user", gson.toJson(total_visit_user_count+1));
 		}
 		
 	}
@@ -46,6 +46,14 @@ public class OnlineSessionListener implements HttpSessionListener {
 	@Override
 	public void sessionDestroyed(HttpSessionEvent arg0) {
 		// TODO Auto-generated method stub
+
+	}
+	
+	public static void main(String[] args) {
+		Gson gson = new Gson();
+		long total_visit_user_count= 0L;
+		System.out.println(gson.toJson(total_visit_user_count+1));
+		System.out.println(gson.toJson(1+""));
 
 	}
 
