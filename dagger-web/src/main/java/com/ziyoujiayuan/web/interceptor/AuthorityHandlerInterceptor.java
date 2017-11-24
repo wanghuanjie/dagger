@@ -18,6 +18,7 @@ import com.ziyoujiayuan.data.pojo.UserBasicInfo;
 import com.ziyoujiayuan.web.annotation.Privilege;
 import com.ziyoujiayuan.web.beans.OnlineUser;
 import com.ziyoujiayuan.web.cons.OnlineUserTypeEnum;
+import com.ziyoujiayuan.web.utils.ParamUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -73,10 +74,11 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 		if (null == OnlineUser.current().getUserBasicInfo()) {
              log.info("OnlinuUser is empty");
  			//先登录再判断
-			if (currentOnlineUserFormCookies(arg0)) {
+			if (currentOnlineUserFromRequestHeader(arg0)) {
 				if (privilege != null) {		
-
 					UserBasicInfo currentUser = OnlineUser.current().getUserBasicInfo();
+					log.info("currentUser:"+currentUser);
+
 					if (currentUser == null) {
 						arg1.sendRedirect("/login/fail");
 						return false;
@@ -90,7 +92,7 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 					return true;
 				}
 				
-			} else if(!currentOnlineUserFormCookies(arg0) && privilege != null){
+			} else if(!currentOnlineUserFromRequestHeader(arg0) && privilege != null){
 				arg1.sendRedirect("/login/fail");
 				return false;
 			} else {
@@ -100,8 +102,9 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 			log.info("OnlineUser is notEmupty!");
 			//直接判断
 			if (privilege != null) {		
-
 				UserBasicInfo currentUser = OnlineUser.current().getUserBasicInfo();
+				log.info("currentUser:"+currentUser);
+
 				if (currentUser == null) {
 					arg1.sendRedirect("/login/fail");
 					return false;
@@ -123,7 +126,8 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 	 * @return 是否存在
 	 * @throws Exception
 	 */
-	public boolean currentOnlineUserFormCookies(HttpServletRequest httpServletRequest) throws Exception{
+	@SuppressWarnings("unused")
+	private boolean currentOnlineUserFromCookies(HttpServletRequest httpServletRequest) throws Exception{
 		Cookie[] cookies = httpServletRequest.getCookies();
 		if (cookies == null) {
 			return false;
@@ -145,6 +149,58 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * 从LocalStorage中获取当前用户
+	 * @param httpServletRequest
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unused")
+	private boolean currentOnlineUserFromLocalStorage(HttpServletRequest httpServletRequest) throws Exception{
+	    String dagger_token = ParamUtils.getParameter(httpServletRequest, "dagger_token");
+		log.info("dagger_token:"+dagger_token);
+		
+	    if (!"".equals(dagger_token)) {
+		    UserBasicInfo userBasicInfo = loginService.getUserBasicInfo(dagger_token);
+		    if (userBasicInfo != null) {
+				OnlineUser.current().setUserBasicInfo(userBasicInfo);
+				OnlineUser.current().setSessionId(dagger_token);
+				OnlineUser.current().setType(OnlineUserTypeEnum.USER.name());
+				
+				log.info("userBasicInfo:"+userBasicInfo);
+				return true;
+			} 
+		}
+	    
+	    return false;
+	}
+	
+	/**
+	 * 从Header中获取当前用户
+	 * @param httpServletRequest
+	 * @return
+	 * @throws Exception
+	 */
+	private boolean currentOnlineUserFromRequestHeader(HttpServletRequest httpServletRequest) throws Exception{
+		
+	    String dagger_token = httpServletRequest.getHeader("dagger_token");
+		log.info("dagger_token:"+dagger_token);
+		
+	    if (null != dagger_token && !"".equals(dagger_token)) {
+		    UserBasicInfo userBasicInfo = loginService.getUserBasicInfo(dagger_token);
+		    if (userBasicInfo != null) {
+				OnlineUser.current().setUserBasicInfo(userBasicInfo);
+				OnlineUser.current().setSessionId(dagger_token);
+				OnlineUser.current().setType(OnlineUserTypeEnum.USER.name());
+				
+				log.info("userBasicInfo:"+userBasicInfo);
+				return true;
+			} 
+		}
+	    
+	    return false;
 	}
 
 }

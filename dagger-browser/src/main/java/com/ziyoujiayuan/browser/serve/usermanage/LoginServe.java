@@ -35,12 +35,13 @@ public class LoginServe {
 	 * @throws AppException
 	 */
 	public UserBasicInfo login(LoginRequestParam loginRequestParam,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws AppException{
-		log.info("login");
+		String sessionId = httpServletRequest.getSession().getId();
+		log.info("login>>sessionId:"+sessionId);
 		UserInfoBean userInfoBean = new UserInfoBean();
 		userInfoBean.setAccount(loginRequestParam.getAccount());
 		userInfoBean.setPassword(loginRequestParam.getPassword());
 				
-		String dagger_token = loginService.doLogin(userInfoBean);
+		String dagger_token = loginService.doLogin(sessionId ,userInfoBean);
 		httpServletResponse.addCookie(CookiesUtils.addCookie(dagger_token));
 
 		return loginService.getUserBasicInfo(dagger_token);
@@ -52,7 +53,7 @@ public class LoginServe {
 	 */
 	public void logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AppException {
 		log.info("logout");
-		loginService.dologout(CookiesUtils.getTokenIdFromCookies(httpServletRequest));
+		loginService.dologout(httpServletRequest.getHeader("dagger_token"));
 		CookiesUtils.cleanCookie();
 		OnlineUser.clean();
 	}

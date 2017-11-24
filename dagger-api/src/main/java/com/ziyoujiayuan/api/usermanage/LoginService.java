@@ -17,7 +17,7 @@ public interface LoginService {
      * @return
      * @throws AppException
      */
-	public String doLogin(UserInfoBean userInfoBean) throws AppException;
+	public String doLogin(String sessionId ,UserInfoBean userInfoBean) throws AppException;
 	
 	/**
 	 * 登出操作(注销操作)

@@ -8,12 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ziyoujiayuan.base.exception.AppException;
 import com.ziyoujiayuan.browser.beans.login.LoginRequestParam;
 import com.ziyoujiayuan.browser.cons.ViewsBasePathCons;
 import com.ziyoujiayuan.browser.serve.usermanage.LoginServe;
+import com.ziyoujiayuan.data.cons.exception.GeneralExceptionCons;
 import com.ziyoujiayuan.web.cons.ResultMsgCons;
 import com.ziyoujiayuan.web.param.ResponseJsonResult;
-import com.ziyoujiayuan.web.utils.CookiesUtils;
 
 import lombok.extern.slf4j.Slf4j;
 /**
@@ -113,8 +114,11 @@ public class LoginController {
 	public ResponseJsonResult getSession(HttpServletRequest httpServletRequest) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
-			String sessionId = CookiesUtils.getTokenIdFromCookies(httpServletRequest);
-			
+		    String sessionId = httpServletRequest.getHeader("dagger_token");
+		    if ("".equals(sessionId)) {
+				throw new AppException(GeneralExceptionCons.BASE_ERRO_MSG);
+			}
+
             responseJsonResult.setData_collect(loginServe.getObjectForSession(sessionId));
 			responseJsonResult.setMsg(ResultMsgCons.OPER_SUCCESS);
             responseJsonResult.setSuccess(true);

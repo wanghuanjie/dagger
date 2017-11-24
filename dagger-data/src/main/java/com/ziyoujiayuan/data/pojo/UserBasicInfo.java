@@ -14,6 +14,8 @@ import lombok.Data;
 @Data
 public class UserBasicInfo implements Serializable{
 
+	private String token;
+	private String sessionId;
 	private long userId;
 	private String userName;
 	private String account;

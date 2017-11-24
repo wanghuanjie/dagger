@@ -46,7 +46,7 @@ public class LoginServiceImpl extends BaseService implements LoginService {
 	@Autowired
 	UserRoleBeanMapper userRoleBeanMapper;
 	@Autowired
-	RedisTemplate<String,String> redisTemplate;
+	RedisTemplate<String,Object> redisTemplate;
 	@Value("${dagger.token.prefix}")
 	private String daggerTokenPrefix;
 	@Value("${dagger.session.maxsurvival}")
@@ -59,7 +59,7 @@ public class LoginServiceImpl extends BaseService implements LoginService {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
-	public String doLogin(UserInfoBean userInfoBean) throws AppException{
+	public String doLogin(String sessionId ,UserInfoBean userInfoBean) throws AppException{
 		try {
 			// TODO Auto-generated method stub
 			UserInfoBeanExample userInfoBeanExample = new UserInfoBeanExample();
@@ -125,6 +125,8 @@ public class LoginServiceImpl extends BaseService implements LoginService {
 			
 			StringBuffer dagger_token = new StringBuffer(daggerTokenPrefix);
 			dagger_token.append(UuidUtils.getUUID());
+			userBasicInfo.setToken(dagger_token.toString());
+			userBasicInfo.setSessionId(sessionId);
 			
 			if (sessionMaxsurvival == 0) sessionMaxsurvival = 180L;
 	        Gson gson = new Gson();
@@ -159,13 +161,18 @@ public class LoginServiceImpl extends BaseService implements LoginService {
 	 */
 	@Override
 	public UserBasicInfo getUserBasicInfo(String daggerToken) throws AppException {
+		UserBasicInfo userBasicInfo = null;
 		try {
 			 Gson gson = new Gson();
-	 	     return gson.fromJson(redisTemplate.opsForValue().get(daggerToken), UserBasicInfo.class);
+			 if (redisTemplate.hasKey(daggerToken)) {
+				 redisTemplate.expire(daggerToken, sessionMaxsurvival, TimeUnit.SECONDS);
+                 userBasicInfo = gson.fromJson(redisTemplate.opsForValue().get(daggerToken).toString(), UserBasicInfo.class);
+			 }
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw new AppException(GeneralExceptionCons.BASE_ERRO_MSG,e);
 		}
+		
+		return userBasicInfo;
 	}
-	
 }
