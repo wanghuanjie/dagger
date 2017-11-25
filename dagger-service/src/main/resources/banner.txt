@@ -1,0 +1,25 @@
+                                                                                                                     
+                                                                                                                     
+DDDDDDDDDDDDD                                                                                                        
+D::::::::::::DDD                                                                                                     
+D:::::::::::::::DD                                                                                                   
+DDD:::::DDDDD:::::D                                                                                                  
+  D:::::D    D:::::D  aaaaaaaaaaaaa     ggggggggg   ggggg   ggggggggg   ggggg    eeeeeeeeeeee    rrrrr   rrrrrrrrr   
+  D:::::D     D:::::D a::::::::::::a   g:::::::::ggg::::g  g:::::::::ggg::::g  ee::::::::::::ee  r::::rrr:::::::::r  
+  D:::::D     D:::::D aaaaaaaaa:::::a g:::::::::::::::::g g:::::::::::::::::g e::::::eeeee:::::eer:::::::::::::::::r 
+  D:::::D     D:::::D          a::::ag::::::ggggg::::::ggg::::::ggggg::::::gge::::::e     e:::::err::::::rrrrr::::::r
+  D:::::D     D:::::D   aaaaaaa:::::ag:::::g     g:::::g g:::::g     g:::::g e:::::::eeeee::::::e r:::::r     r:::::r
+  D:::::D     D:::::D aa::::::::::::ag:::::g     g:::::g g:::::g     g:::::g e:::::::::::::::::e  r:::::r     rrrrrrr
+  D:::::D     D:::::Da::::aaaa::::::ag:::::g     g:::::g g:::::g     g:::::g e::::::eeeeeeeeeee   r:::::r            
+  D:::::D    D:::::Da::::a    a:::::ag::::::g    g:::::g g::::::g    g:::::g e:::::::e            r:::::r            
+DDD:::::DDDDD:::::D a::::a    a:::::ag:::::::ggggg:::::g g:::::::ggggg:::::g e::::::::e           r:::::r            
+D:::::::::::::::DD  a:::::aaaa::::::a g::::::::::::::::g  g::::::::::::::::g  e::::::::eeeeeeee   r:::::r            
+D::::::::::::DDD     a::::::::::aa:::a gg::::::::::::::g   gg::::::::::::::g   ee:::::::::::::e   r:::::r            
+DDDDDDDDDDDDD         aaaaaaaaaa  aaaa   gggggggg::::::g     gggggggg::::::g     eeeeeeeeeeeeee   rrrrrrr            
+                                                 g:::::g             g:::::g                                         
+                                     gggggg      g:::::g gggggg      g:::::g                                         
+                                     g:::::gg   gg:::::g g:::::gg   gg:::::g                                         
+                                      g::::::ggg:::::::g  g::::::ggg:::::::g                                         
+                                       gg:::::::::::::g    gg:::::::::::::g                                          
+                                         ggg::::::ggg        ggg::::::ggg                                            
+                                            gggggg              gggggg                                               

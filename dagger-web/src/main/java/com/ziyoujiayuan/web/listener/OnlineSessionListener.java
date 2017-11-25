@@ -28,8 +28,8 @@ public class OnlineSessionListener implements HttpSessionListener {
 		// TODO Auto-generated method stub
 		synchronized (OnlineSessionListener.class) {
 			Gson gson = new Gson();
-			//记录累计用户,待优化
-			long total_visit_user_count= 0L;
+			
+			long total_visit_user_count= 0L;//记录累计用户,待优化
 			Object total_visit_user = redisTemplate.opsForValue().get("total_visit_user");
 			if(null != total_visit_user) {
 				total_visit_user_count = Long.parseLong(total_visit_user.toString());
@@ -48,13 +48,4 @@ public class OnlineSessionListener implements HttpSessionListener {
 		// TODO Auto-generated method stub
 
 	}
-	
-	public static void main(String[] args) {
-		Gson gson = new Gson();
-		long total_visit_user_count= 0L;
-		System.out.println(gson.toJson(total_visit_user_count+1));
-		System.out.println(gson.toJson(1+""));
-
-	}
-
 }

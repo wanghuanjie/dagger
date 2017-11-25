@@ -23,7 +23,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
 	
 	@Override
     public void addInterceptors(InterceptorRegistry registry) {  
-        registry.addInterceptor(crossDomainInterceptor).addPathPatterns("/**");  
+//        registry.addInterceptor(crossDomainInterceptor).addPathPatterns("/**");  
         registry.addInterceptor(authorityHandlerInterceptor).addPathPatterns("/**"); 
         
         super.addInterceptors(registry);

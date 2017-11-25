@@ -14,11 +14,11 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ziyoujiayuan.api.usermanage.LoginService;
+import com.ziyoujiayuan.base.exception.AppException;
 import com.ziyoujiayuan.data.pojo.UserBasicInfo;
 import com.ziyoujiayuan.web.annotation.Privilege;
 import com.ziyoujiayuan.web.beans.OnlineUser;
 import com.ziyoujiayuan.web.cons.OnlineUserTypeEnum;
-import com.ziyoujiayuan.web.utils.ParamUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -72,52 +72,101 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 		Privilege privilege = method.getAnnotation(Privilege.class);
 		
 		if (null == OnlineUser.current().getUserBasicInfo()) {
-             log.info("OnlinuUser is empty");
- 			//先登录再判断
-			if (currentOnlineUserFromRequestHeader(arg0)) {
-				if (privilege != null) {		
+             return isEmptyUserBasicInfo(arg0, arg1, privilege);
+		} else {
+			return isNotEmptyUserBasicInfo(arg0, arg1, privilege);
+		}
+	}
+	
+	/**
+	 * UserBasicInfo为空
+	 * @param arg0
+	 * @param arg1
+	 * @param privilege
+	 * @return
+	 * @throws Exception
+	 */
+	private boolean isEmptyUserBasicInfo(HttpServletRequest arg0, HttpServletResponse arg1, Privilege privilege) throws AppException {		
+		String stageRecord = "";
+		try {
+			if (currentUserBasicInfoFromCookies(arg0)) {//exist user_basic_info
+				if (privilege != null) {//don't require permission control		
 					UserBasicInfo currentUser = OnlineUser.current().getUserBasicInfo();
-					log.info("currentUser:"+currentUser);
+					log.info("The currentUser of the current application:{};",currentUser);
 
 					if (currentUser == null) {
+						stageRecord = "[user_basic_info is null;privilege isn't null]";
 						arg1.sendRedirect("/login/fail");
 						return false;
 					} else if(currentUser != null && ! currentUser.containPrivilege(privilege.value())) {
+						stageRecord = "[user_basic_info isn't null;privilege isn't null but not contain]";
 						arg1.sendRedirect("/error/403");
 						return false;
 					} else {
+						stageRecord = "[user_basic_info isn't null;privilege isn't null and contain]";
 						return true;
 					}
 				} else {
+					stageRecord = "[privilege is null]";
 					return true;
-				}
-				
-			} else if(!currentOnlineUserFromRequestHeader(arg0) && privilege != null){
+				}			
+			} else if(!currentUserBasicInfoFromCookies(arg0) && privilege != null){//is not exist user_basic_info and require permission control
+				stageRecord = "[user_basic_info is null;privilege isn't null]";
 				arg1.sendRedirect("/login/fail");
 				return false;
 			} else {
+				stageRecord = "[privilege is null]";
 				return true;
 			}
-		} else {
-			log.info("OnlineUser is notEmupty!");
-			//直接判断
+		} catch (Exception e) {
+			// TODO: handle exception
+			stageRecord = e.getMessage();
+			throw new AppException("AuthorityHandlerInterceptor-Exception",e);
+		}finally {
+			// TODO: handle finally clause
+			log.info("The OnlinuUser of the current application is empty;The stage of arrival is {};",stageRecord);
+		}		
+	}
+	
+	/**
+	 * UserBasicInfo不为空
+	 * @param arg0
+	 * @param arg1
+	 * @param privilege
+	 * @return
+	 * @throws AppException
+	 */
+	private boolean isNotEmptyUserBasicInfo(HttpServletRequest arg0, HttpServletResponse arg1, Privilege privilege) throws AppException {		
+		String stageRecord = "";
+		try {
 			if (privilege != null) {		
 				UserBasicInfo currentUser = OnlineUser.current().getUserBasicInfo();
-				log.info("currentUser:"+currentUser);
+				log.info("The currentUser of the current application:{};",currentUser);
 
 				if (currentUser == null) {
+					stageRecord = "[user_basic_info is null;]";
 					arg1.sendRedirect("/login/fail");
 					return false;
-				} else if(currentUser != null && ! currentUser.containPrivilege(privilege.value())) {
+				} else if(currentUser != null && !currentUser.containPrivilege(privilege.value())) {
+					stageRecord = "[user_basic_info isn't null;privilege isn't null and not contain]";
 					arg1.sendRedirect("/error/403");
 					return false;
 				} else {
+					stageRecord = "[user_basic_info isn't null;privilege isn't null and contain]";
 					return true;
 				}
 			} else {
+				stageRecord = "[privilege is null]";
 				return true;
 			}
-		}
+		} catch (Exception e) {
+			// TODO: handle exception
+			stageRecord = e.getMessage();
+			throw new AppException("AuthorityHandlerInterceptor-Exception",e);
+		}finally {
+			// TODO: handle finally clause
+			log.info("The OnlinuUser of the current application is not empty;The stage of arrival is {};",stageRecord);
+		}		
 	}
 	
 	/**
@@ -126,8 +175,7 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 	 * @return 是否存在
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unused")
-	private boolean currentOnlineUserFromCookies(HttpServletRequest httpServletRequest) throws Exception{
+	private boolean currentUserBasicInfoFromCookies(HttpServletRequest httpServletRequest) throws Exception{
 		Cookie[] cookies = httpServletRequest.getCookies();
 		if (cookies == null) {
 			return false;
@@ -135,16 +183,18 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 		for (Cookie cookie : cookies) {
  			if ("dagger_token".equals(cookie.getName())) {
 				String token = cookie.getValue();
-				
+				log.info("The dagger_token of the current application:"+token+";");
+
 				UserBasicInfo userBasicInfo = loginService.getUserBasicInfo(token);
 				if (userBasicInfo != null) {
 					OnlineUser.current().setUserBasicInfo(userBasicInfo);
 					OnlineUser.current().setSessionId(token);
 					OnlineUser.current().setType(OnlineUserTypeEnum.USER.name());
+					
+					log.info("The user_basic_info of the current application:"+userBasicInfo+";");
 					return true;
 				} else {
-					// token已过期
-					return false;
+					return false;// token已过期
 				}
 			}
 		}
@@ -152,41 +202,15 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 	}
 	
 	/**
-	 * 从LocalStorage中获取当前用户
+	 * 从RequestHeader中获取当前用户信息
 	 * @param httpServletRequest
 	 * @return
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unused")
-	private boolean currentOnlineUserFromLocalStorage(HttpServletRequest httpServletRequest) throws Exception{
-	    String dagger_token = ParamUtils.getParameter(httpServletRequest, "dagger_token");
-		log.info("dagger_token:"+dagger_token);
-		
-	    if (!"".equals(dagger_token)) {
-		    UserBasicInfo userBasicInfo = loginService.getUserBasicInfo(dagger_token);
-		    if (userBasicInfo != null) {
-				OnlineUser.current().setUserBasicInfo(userBasicInfo);
-				OnlineUser.current().setSessionId(dagger_token);
-				OnlineUser.current().setType(OnlineUserTypeEnum.USER.name());
-				
-				log.info("userBasicInfo:"+userBasicInfo);
-				return true;
-			} 
-		}
-	    
-	    return false;
-	}
-	
-	/**
-	 * 从Header中获取当前用户
-	 * @param httpServletRequest
-	 * @return
-	 * @throws Exception
-	 */
-	private boolean currentOnlineUserFromRequestHeader(HttpServletRequest httpServletRequest) throws Exception{
-		
+	private boolean currentUserBasicInfoFromRequestHeader(HttpServletRequest httpServletRequest) throws Exception{
 	    String dagger_token = httpServletRequest.getHeader("dagger_token");
-		log.info("dagger_token:"+dagger_token);
+		log.info("The dagger_token of the current application:"+dagger_token+";");
 		
 	    if (null != dagger_token && !"".equals(dagger_token)) {
 		    UserBasicInfo userBasicInfo = loginService.getUserBasicInfo(dagger_token);
@@ -195,12 +219,10 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 				OnlineUser.current().setSessionId(dagger_token);
 				OnlineUser.current().setType(OnlineUserTypeEnum.USER.name());
 				
-				log.info("userBasicInfo:"+userBasicInfo);
+				log.info("The user_basic_info of the current application:"+userBasicInfo+";");
 				return true;
 			} 
 		}
-	    
 	    return false;
 	}
-
 }
