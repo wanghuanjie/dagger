@@ -118,10 +118,13 @@ public class RoleServiceImpl extends BaseService implements RoleService {
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.RoleService#doQueryRoleByUser(long)
 	 */
+	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
-	public RoleInfoBean doQueryRoleByUser(long userId) throws AppException {
-		return null;
+	public Map<String, Object> doQueryRoleByUser(long userId) throws AppException {
+		Map<String, Object> param = new HashMap<>();
+		param.put("user_id", userId);
+		return (Map<String, Object>)queryObject("com.ziyoujiayuan.data.sql.mybaties.mapper.def.usermanage.RoleServiceMapper.selectUserRoles", param);        	    
 	}
 	
 	/* (non-Javadoc)

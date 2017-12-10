@@ -75,7 +75,7 @@ public class RoleServe {
 	 * @return
 	 * @throws AppException
 	 */
-	public RoleInfoBean queryRoleByUser(long userId) throws AppException {
+	public Map<String, Object> queryRoleByUser(long userId) throws AppException {
 		return roleService.doQueryRoleByUser(userId);
 	}
 	

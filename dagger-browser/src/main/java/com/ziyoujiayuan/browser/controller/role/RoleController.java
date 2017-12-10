@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ziyoujiayuan.base.exception.AppException;
 import com.ziyoujiayuan.browser.beans.role.RoleRequestParam;
 import com.ziyoujiayuan.browser.cons.ViewsBasePathCons;
+import com.ziyoujiayuan.browser.serve.usermanage.LoginServe;
 import com.ziyoujiayuan.browser.serve.usermanage.RoleServe;
 import com.ziyoujiayuan.web.cons.ResultMsgCons;
 import com.ziyoujiayuan.web.base.BaseController;
@@ -33,6 +34,8 @@ public class RoleController extends BaseController{
 	
 	@Autowired
 	RoleServe roleServe;
+	@Autowired
+	LoginServe loginServe;
 	
 	/**
 	 * 角色管理页面
@@ -138,7 +141,7 @@ public class RoleController extends BaseController{
 	}
 	
 	/**
-	 * 查询用户对应的角色
+	 * 查询用户对应的角色|外界不控制则使用当前用户
 	 * @param httpServletRequest
 	 * @return
 	 */
@@ -148,8 +151,8 @@ public class RoleController extends BaseController{
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
              long userId = ParamUtils.getParameterLong(httpServletRequest, "userId", -1L);
-             if (-1 == userId) {
-				throw new AppException("用户ID不存在，操作失败！");
+             if (-1 == userId) {				
+				throw new AppException("用户ID不能为空,操作失败！");
 			}
 			
 			responseJsonResult.setData_collect(roleServe.queryRoleByUser(userId));

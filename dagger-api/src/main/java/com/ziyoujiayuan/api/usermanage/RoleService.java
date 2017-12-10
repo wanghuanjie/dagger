@@ -49,7 +49,7 @@ public interface RoleService {
 	 * @return
 	 * @throws AppException
 	 */
-	public RoleInfoBean doQueryRoleByUser(long userId) throws AppException;
+	public Map<String, Object> doQueryRoleByUser(long userId) throws AppException;
 	
 	/**
 	 * 角色绑定／解绑用户
