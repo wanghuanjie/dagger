@@ -80,7 +80,7 @@ public class RoleServe {
 	}
 	
 	/**
-	 * 角色解除／关联用户
+	 * 角色解绑/关联用户
 	 * @param roleId
 	 * @param userId
 	 * @throws AppException

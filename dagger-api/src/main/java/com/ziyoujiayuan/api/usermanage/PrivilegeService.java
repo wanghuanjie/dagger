@@ -57,5 +57,5 @@ public interface PrivilegeService {
 	 * @param roleId
 	 * @throws AppException
 	 */
-	public void doToggleBind(long privilegeId , long roleId) throws AppException;
+	public void doToggleBind(long[] privilegeIds , long roleId) throws AppException;
 }

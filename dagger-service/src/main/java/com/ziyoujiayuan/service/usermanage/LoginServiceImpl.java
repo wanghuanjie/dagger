@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 
@@ -33,11 +32,14 @@ import com.ziyoujiayuan.data.sql.mybaties.mapper.auto.usermanage.UserInfoBeanMap
 import com.ziyoujiayuan.data.sql.mybaties.mapper.auto.usermanage.UserRoleBeanMapper;
 import com.ziyoujiayuan.service.base.BaseService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 登录相关功能实现
  * @Author wanghjbuf
  * @Date 2017年10月16日
  */
+@Slf4j
 @Service("com.ziyoujiayuan.service.usermanage.LoginServiceImpl")
 public class LoginServiceImpl extends BaseService implements LoginService {
 	
@@ -57,7 +59,6 @@ public class LoginServiceImpl extends BaseService implements LoginService {
 	 * @see com.ziyoujiayuan.api.usermanage.LoginService#doLogin(com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.UserInfoBean)
 	 */
 	@SuppressWarnings("unchecked")
-	@Transactional
 	@Override
 	public String doLogin(String sessionId ,UserInfoBean userInfoBean) throws AppException{
 		try {
@@ -167,12 +168,14 @@ public class LoginServiceImpl extends BaseService implements LoginService {
 			 if (redisTemplate.hasKey(daggerToken)) {
 				 redisTemplate.expire(daggerToken, sessionMaxsurvival, TimeUnit.SECONDS);
                  userBasicInfo = gson.fromJson(redisTemplate.opsForValue().get(daggerToken).toString(), UserBasicInfo.class);
+			     
+                 log.info("[>>><<<]dagger_token:{},session_time:{},userBasicInfo:{}",daggerToken, sessionMaxsurvival, userBasicInfo);
 			 }
+			 log.info("[<<<>>>]");
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw new AppException(GeneralExceptionCons.BASE_ERRO_MSG,e);
 		}
-		
 		return userBasicInfo;
 	}
 }

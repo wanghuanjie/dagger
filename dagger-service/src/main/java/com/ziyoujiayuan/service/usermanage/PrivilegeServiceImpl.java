@@ -1,12 +1,11 @@
 package com.ziyoujiayuan.service.usermanage;
 
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.ziyoujiayuan.api.usermanage.PrivilegeService;
 import com.ziyoujiayuan.base.datapager.Pager;
@@ -43,7 +42,6 @@ public class PrivilegeServiceImpl extends BaseService implements PrivilegeServic
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.PrivilegeService#doAddPrivilege(com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.PrivilegeInfoBean)
 	 */
-	@Transactional
 	@Override
 	public void doAddPrivilege(PrivilegeInfoBean privilegeInfoBean) throws AppException{
 		try {
@@ -57,6 +55,8 @@ public class PrivilegeServiceImpl extends BaseService implements PrivilegeServic
 			// TODO Auto-generated method stub
 			privilegeInfoBean.setPrivilegeCo(UuidUtils.getUUID());
 			privilegeInfoBean.setStatus(PrivilegeStatusEnum.ENABLED.name());
+			privilegeInfoBean.setCreatTime(new Date());
+			privilegeInfoBean.setOperTime(new Date());
 			
 			privilegeInfoBeanMapper.insertSelective(privilegeInfoBean);
 		} catch (AppException e) {
@@ -71,7 +71,6 @@ public class PrivilegeServiceImpl extends BaseService implements PrivilegeServic
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.PrivilegeService#doEditPrivilege(com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.PrivilegeInfoBean)
 	 */
-	@Transactional	
 	@Override
 	public void doEditPrivilege(PrivilegeInfoBean privilegeInfoBean) throws AppException{
 		// TODO Auto-generated method stub
@@ -88,7 +87,6 @@ public class PrivilegeServiceImpl extends BaseService implements PrivilegeServic
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.PrivilegeService#doQueryPrivileges()
 	 */
-	@Transactional
 	@Override
 	public Pager doQueryPrivileges(Map<String, Object> param) throws AppException{
 		// TODO Auto-generated method stub
@@ -103,15 +101,15 @@ public class PrivilegeServiceImpl extends BaseService implements PrivilegeServic
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.PrivilegeService#doQueryPrivilegesByRole(long)
 	 */
-	@Transactional
 	@Override
 	public Pager doQueryPrivilegesByRole(long roleId) throws AppException{
 		// TODO Auto-generated method stub
         try {
         	    Map<String, Object> param = new HashMap<>();
-        	    param.put("roleId", roleId);
+        	    param.put("role_id", roleId);
+        	    param.put("privilege_type", 3);
         	    
-			return queryForPager("", param);
+			return queryForPager("com.ziyoujiayuan.data.sql.mybaties.mapper.def.usermanage.PrivilegeServiceMapper.selectRolePrivileges", param);
 		} catch (Exception e) {
 			// TODO: handle exception
 	    	    throw new AppException(GeneralExceptionCons.BASE_ERRO_MSG,e);
@@ -121,7 +119,6 @@ public class PrivilegeServiceImpl extends BaseService implements PrivilegeServic
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.PrivilegeService#doQueryRoleByPrivileges(long)
 	 */
-	@Transactional
 	@Override
 	public Pager doQueryRoleByPrivileges(long privilegeId) throws AppException{
 		// TODO Auto-generated method stub
@@ -139,7 +136,8 @@ public class PrivilegeServiceImpl extends BaseService implements PrivilegeServic
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.PrivilegeService#doToggleBind(long , long)
 	 */
-	public void doToggleBind(long privilegeId , long roleId) throws AppException {
+	@Override
+	public void doToggleBind(long[] privilegeIds , long roleId) throws AppException {
 		try {
 		     RoleInfoBeanExample roleInfoBeanExample = new RoleInfoBeanExample();
 		     roleInfoBeanExample.createCriteria().andRoleIdEqualTo(roleId).andStatusEqualTo(RoleStatusEnum.ENABLED.name());
@@ -149,16 +147,18 @@ public class PrivilegeServiceImpl extends BaseService implements PrivilegeServic
 		     }
 		     
 		     RolePrivilegeBeanExample rolePrivilegeBeanExample = new RolePrivilegeBeanExample();
-		     rolePrivilegeBeanExample.createCriteria().andRoleIdEqualTo(roleId).andPrivilegeIdEqualTo(privilegeId);
-		     int relationshipSize = rolePrivilegeBeanMapper.selectByExample(rolePrivilegeBeanExample).size();
-		     RolePrivilegeBean rolePrivilegeBean = new RolePrivilegeBean();
-		     rolePrivilegeBean.setPrivilegeId(privilegeId);
-		     rolePrivilegeBean.setRoleId(roleId);
-		     if (relationshipSize >= 1) {
-		         rolePrivilegeBeanMapper.deleteByPrimaryKey(rolePrivilegeBean);
-			 } else {
-		         rolePrivilegeBeanMapper.insertSelective(rolePrivilegeBean);
-
+		     rolePrivilegeBeanExample.createCriteria().andRoleIdEqualTo(roleId);		     
+		     rolePrivilegeBeanMapper.deleteByExample(rolePrivilegeBeanExample);
+		     
+		     for (int i = 0; i < privilegeIds.length; i++) {
+			     RolePrivilegeBean rolePrivilegeBean = new RolePrivilegeBean();
+			     rolePrivilegeBean.setPrivilegeId(privilegeIds[i]);
+			     rolePrivilegeBean.setRoleId(roleId);
+			     rolePrivilegeBean.setCreator("system");
+			     rolePrivilegeBean.setCreatTime(new Date());
+			     rolePrivilegeBean.setOpertor("system");
+			     rolePrivilegeBean.setOperTime(new Date());
+			     rolePrivilegeBeanMapper.insertSelective(rolePrivilegeBean);
 			 }
 		}catch (AppException e) {
 			// TODO: handle exception	
@@ -168,37 +168,4 @@ public class PrivilegeServiceImpl extends BaseService implements PrivilegeServic
 			throw new AppException(GeneralExceptionCons.BASE_ERRO_MSG,e);
 		}
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.ziyoujiayuan.api.usermanage.PrivilegeService#doAddPrivilegesToRole(java.util.List<java.lang.String>, long)
-	 */
-	public void doAddPrivilegesToRole(List<String> privilegIds , long roleId) throws AppException{
-		try {
-		     RoleInfoBeanExample roleInfoBeanExample = new RoleInfoBeanExample();
-		     roleInfoBeanExample.createCriteria().andRoleIdEqualTo(roleId).andStatusEqualTo(RoleStatusEnum.ENABLED.name());
-		     int size = roleInfoBeanMapper.selectByExample(roleInfoBeanExample).size();
-		     if(size < 1) {
-		    	     throw new AppException("角色不存在或者无可用状态,操作失败！");
-		     }
-		     
-		     RolePrivilegeBeanExample rolePrivilegeBeanExample = new RolePrivilegeBeanExample();
-		     rolePrivilegeBeanExample.createCriteria().andRoleIdEqualTo(roleId);
-		     rolePrivilegeBeanMapper.deleteByExample(rolePrivilegeBeanExample);
-
-		     for(String privilegeId : privilegIds) {
-		    	     //TODO 1.批处理添加；2.验证权限的存在性；
-		    	     RolePrivilegeBean rolePrivilegeBean = new RolePrivilegeBean();
-		    	     rolePrivilegeBean.setRoleId(roleId);
-		    	     rolePrivilegeBean.setPrivilegeId(Long.parseLong(privilegeId));
-			     rolePrivilegeBeanMapper.insertSelective(rolePrivilegeBean);
-		     }
-		}catch (AppException e) {
-			// TODO: handle exception	
-			throw e;
-		} catch (Exception e) {
-			// TODO: handle exception
-			throw new AppException(GeneralExceptionCons.BASE_ERRO_MSG,e);
-		}
-	}
-
 }

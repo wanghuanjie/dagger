@@ -4,7 +4,6 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.ziyoujiayuan.api.usermanage.RegisterService;
 import com.ziyoujiayuan.base.exception.AppException;
@@ -30,7 +29,6 @@ public class RegisterServiceImpl implements RegisterService {
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.RegisterService#doRegister()
 	 */
-	@Transactional
 	@Override
 	public void doRegister(UserInfoBean userInfoBean) throws AppException{
 		try {

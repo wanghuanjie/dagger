@@ -53,7 +53,7 @@ public class RoleController extends BaseController{
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("/doadd")
+	@RequestMapping("/doaddrole")
 	public ResponseJsonResult doadd(RoleRequestParam roleRequestParam) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
@@ -141,7 +141,7 @@ public class RoleController extends BaseController{
 	}
 	
 	/**
-	 * 查询用户对应的角色|外界不控制则使用当前用户
+	 * 查询用户对应的角色
 	 * @param httpServletRequest
 	 * @return
 	 */
@@ -167,25 +167,15 @@ public class RoleController extends BaseController{
 	}
 	
 	/**
-	 * 用户解绑／关联角色
+	 * 用户解绑/关联角色
 	 * @param httpServletRequest
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping("/dobind")
-	public ResponseJsonResult dobind(HttpServletRequest httpServletRequest) {
+	public ResponseJsonResult dobind(long userId, long roleId) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
-            long userId = ParamUtils.getParameterLong(httpServletRequest, "userId", -1L);
-            if (-1 == userId) {
-				throw new AppException("用户ID不存在，操作失败！");
-			}
-            
-            long roleId = ParamUtils.getParameterLong(httpServletRequest, "roleId", -1L);
-            if (-1 == userId) {
-				throw new AppException("角色ID不存在，操作失败！");
-			}
-
             roleServe.togglebind(roleId, userId);
 		    responseJsonResult.setMsg(ResultMsgCons.OPER_SUCCESS);
             responseJsonResult.setSuccess(true);

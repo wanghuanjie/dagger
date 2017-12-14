@@ -5,13 +5,30 @@
        <trim prefix="where" prefixOverrides="and|or">  
             <if test="privilege_id!=null">  
                 AND t.privilege_id = #{privilege_id}  
-            </if>   
+            </if>  
             <if test="privilege_name!=null">  
                 AND t.privilege_name like #{privilege_name}  
+            </if> 
+            <if test="privilege_type!=null">  
+                AND t.privilege_type = #{privilege_type}  
+            </if> 
+            <if test="status!=null">  
+                AND t.status = #{status}  
+            </if>   
+        </trim>
+  </sql>
+  <sql id="selectRolePrivileges_where">
+       <trim prefix="where" prefixOverrides="and|or">  
+            <if test="role_id!=null">  
+                AND t1.role_id = #{role_id}  
+            </if>  
+            <if test="privilege_type!=null">  
+                AND t.privilege_type = #{privilege_type}  
             </if>  
         </trim>
   </sql>
 
+  <!-- 查询全部权限 -->
   <select id="selectPrivileges" resultType="java.util.Map">
         select 
              t.privilege_id         as            privilege_id,  
@@ -31,6 +48,42 @@
     order by t.privilege_id desc 
   </select>
   <select id="selectPrivileges_count" resultType="int">
+        select count(1)
+        from t_privilege_info t
+        <include refid="selectPrivileges_where"/>
+  </select>
+  
+  <!-- 通过角色查询权限相关 -->
+  <select id="selectRolePrivileges" resultType="java.util.Map">
+      select 
+             t.privilege_id         as            privilege_id,  
+             t.privilege_dec        as            privilege_dec,
+             t.privilege_name       as            privilege_name,
+             t.privilege_type       as            privilege_type,
+             t.parent_id            as            parent_id,
+             t.status               as            status
+        from t_privilege_info t
+       inner join t_role_privilege t1 on t1.privilege_id = t.privilege_id
+        <include refid="selectRolePrivileges_where"/>
+    order by t.privilege_id desc 
+  </select>
+  <select id="selectRolePrivileges_count" resultType="int">
+      select count(1)
+        from t_privilege_info t
+       inner join t_role_privilege t1 on t1.privilege_id = t.privilege_id
+        <include refid="selectRolePrivileges_where"/>
+  </select>
+  
+  <!-- 公共下拉选 -->
+  <select id="selectPubSelPrivileges" resultType="java.util.Map">
+        select 
+             t.privilege_id         as            id,  
+             t.privilege_name       as            name
+        from t_privilege_info t
+        <include refid="selectPrivileges_where"/>
+    order by t.privilege_id desc 
+  </select>
+  <select id="selectPubSelPrivileges_count" resultType="int">
         select count(1)
         from t_privilege_info t
         <include refid="selectPrivileges_where"/>

@@ -14,7 +14,7 @@ import com.ziyoujiayuan.api.usermanage.StatisticsService;
 import com.ziyoujiayuan.service.base.BaseService;
 
 /**
- * 
+ * 在线统计功能
  * @Author wanghjbuf
  * @Date 2017年11月19日
  */
