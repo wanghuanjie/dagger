@@ -1,0 +1,12 @@
+*.class
+*.war
+target/
+
+.settings/
+.classpath
+.project
+
+.DS_Store
+
+bin/
+
