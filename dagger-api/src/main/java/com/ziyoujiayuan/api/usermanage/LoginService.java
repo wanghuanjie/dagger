@@ -32,4 +32,11 @@ public interface LoginService {
 	 * @throws AppException
 	 */
 	public UserBasicInfo getUserBasicInfo(String daggerToken) throws AppException;
+	
+	/**
+	 * 更新daggerToken的超时时间
+	 * @param daggerToken
+	 * @throws AppException
+	 */
+	public void updateDaggerTokenTimeOut(String daggerToken) throws AppException;
 }

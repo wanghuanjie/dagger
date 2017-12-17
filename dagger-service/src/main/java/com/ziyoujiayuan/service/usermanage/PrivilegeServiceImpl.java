@@ -2,7 +2,9 @@ package com.ziyoujiayuan.service.usermanage;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -139,6 +141,7 @@ public class PrivilegeServiceImpl extends BaseService implements PrivilegeServic
 	@Override
 	public void doToggleBind(long[] privilegeIds , long roleId) throws AppException {
 		try {
+			//TODO 代码结构待优化
 		     RoleInfoBeanExample roleInfoBeanExample = new RoleInfoBeanExample();
 		     roleInfoBeanExample.createCriteria().andRoleIdEqualTo(roleId).andStatusEqualTo(RoleStatusEnum.ENABLED.name());
 		     int size = roleInfoBeanMapper.selectByExample(roleInfoBeanExample).size();
@@ -150,9 +153,12 @@ public class PrivilegeServiceImpl extends BaseService implements PrivilegeServic
 		     rolePrivilegeBeanExample.createCriteria().andRoleIdEqualTo(roleId);		     
 		     rolePrivilegeBeanMapper.deleteByExample(rolePrivilegeBeanExample);
 		     
+		     Set<Long> parentIds = new HashSet<>();
 		     for (int i = 0; i < privilegeIds.length; i++) {
 			     RolePrivilegeBean rolePrivilegeBean = new RolePrivilegeBean();
 			     rolePrivilegeBean.setPrivilegeId(privilegeIds[i]);
+			     parentIds.add(privilegeInfoBeanMapper.selectByPrimaryKey(privilegeIds[i]).getParentId());
+			     
 			     rolePrivilegeBean.setRoleId(roleId);
 			     rolePrivilegeBean.setCreator("system");
 			     rolePrivilegeBean.setCreatTime(new Date());
@@ -160,6 +166,19 @@ public class PrivilegeServiceImpl extends BaseService implements PrivilegeServic
 			     rolePrivilegeBean.setOperTime(new Date());
 			     rolePrivilegeBeanMapper.insertSelective(rolePrivilegeBean);
 			 }
+		     
+		     for(long item : parentIds) {
+		    	     RolePrivilegeBean rolePrivilegeBean = new RolePrivilegeBean();
+			     rolePrivilegeBean.setPrivilegeId(item);			     
+			     rolePrivilegeBean.setRoleId(roleId);
+			     rolePrivilegeBean.setCreator("system");
+			     rolePrivilegeBean.setCreatTime(new Date());
+			     rolePrivilegeBean.setOpertor("system");
+			     rolePrivilegeBean.setOperTime(new Date());
+			     
+			     rolePrivilegeBeanMapper.insertSelective(rolePrivilegeBean);
+		     }
+		     
 		}catch (AppException e) {
 			// TODO: handle exception	
 			throw e;

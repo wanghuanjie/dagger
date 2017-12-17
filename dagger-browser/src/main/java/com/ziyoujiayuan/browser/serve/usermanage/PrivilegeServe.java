@@ -41,7 +41,7 @@ public class PrivilegeServe {
 		if (3L == privilegeInfoBean.getPrivilegeType().longValue()) {
 			privilegeInfoBean.setParentId(privilegeRequestParam.getParentId());
 		}
-		privilegeInfoBean.setPrivilegeUrl(privilegeRequestParam.getPrivilegeUrl());
+		privilegeInfoBean.setPrivilegeAlias(privilegeRequestParam.getPrivilegeAlias());
 		
 		privilegeService.doAddPrivilege(privilegeInfoBean);
 	}

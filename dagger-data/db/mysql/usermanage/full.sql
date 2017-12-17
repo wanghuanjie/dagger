@@ -1,10 +1,10 @@
 DROP TABLE t_privilege_info;
-CREATE TABLE t_privilege_info (privilege_id bigint NOT NULL, privilege_dec varchar(150), privilege_name varchar(30), privilege_type int DEFAULT 2 NOT NULL, privilege_url varchar(100), privilege_co varchar(32), status varchar(10), PRIMARY KEY (privilege_id)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户权限表';
+CREATE TABLE t_privilege_info (privilege_id bigint NOT NULL AUTO_INCREMENT, privilege_dec varchar(150), privilege_name varchar(30), privilege_type int DEFAULT 2 NOT NULL, privilege_alias varchar(60), privilege_co varchar(32), status varchar(10), parent_id bigint DEFAULT -1, creat_time timestamp NULL, creator varchar(64), oper_time timestamp NULL, opertor varchar(64), PRIMARY KEY (privilege_id)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户权限表';
 DROP TABLE t_role_info;
-CREATE TABLE t_role_info (role_id bigint NOT NULL, role_dec varchar(150), role_name varchar(30), role_co varchar(32), status varchar(10), PRIMARY KEY (role_id)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色表';
+CREATE TABLE t_role_info (role_id bigint NOT NULL AUTO_INCREMENT, role_dec varchar(150), role_name varchar(30), role_co varchar(32), status varchar(10), creat_time timestamp NULL, creator varchar(64), oper_time timestamp NULL, opertor varchar(64), PRIMARY KEY (role_id)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色表';
 DROP TABLE t_role_privilege;
-CREATE TABLE t_role_privilege (role_id bigint NOT NULL, privilege_id bigint NOT NULL, PRIMARY KEY (role_id, privilege_id)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色-权限对应表';
+CREATE TABLE t_role_privilege (role_id bigint NOT NULL, privilege_id bigint NOT NULL, creat_time timestamp NULL, creator varchar(64), oper_time timestamp NULL, opertor varchar(64), PRIMARY KEY (role_id, privilege_id)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色-权限对应表';
 DROP TABLE t_user_info;
-CREATE TABLE t_user_info (user_id bigint NOT NULL, email varchar(50), gender varchar(10), name varchar(20), password varchar(32), real_name varchar(30), user_co varchar(32), status varchar(10), PRIMARY KEY (user_id)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息表';
+CREATE TABLE t_user_info (user_id bigint NOT NULL AUTO_INCREMENT, email varchar(50), gender varchar(10), nick_name varchar(64), password varchar(64), real_name varchar(64), user_co varchar(32), status varchar(10), creat_time timestamp NULL, creator varchar(64), oper_time timestamp NULL, opertor varchar(64), account varchar(64), PRIMARY KEY (user_id)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息表';
 DROP TABLE t_user_role;
-CREATE TABLE t_user_role (user_id bigint NOT NULL, role_id bigint NOT NULL, PRIMARY KEY (user_id, role_id)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户-角色对应表';
+CREATE TABLE t_user_role (user_id bigint NOT NULL, role_id bigint NOT NULL, creat_time timestamp NULL, creator varchar(64), oper_time timestamp NULL, opertor varchar(64), PRIMARY KEY (user_id, role_id)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户-角色对应表';

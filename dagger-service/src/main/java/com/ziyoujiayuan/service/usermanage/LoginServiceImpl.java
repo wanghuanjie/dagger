@@ -103,7 +103,7 @@ public class LoginServiceImpl extends BaseService implements LoginService {
 					PrivilegeBasicInfo privilegeBasicInfo = new PrivilegeBasicInfo();
 					privilegeBasicInfo.setPrivilegeName(privilegeSnap.getPrivilegeName());
 					privilegeBasicInfo.setType(type2);
-					privilegeBasicInfo.setPrivilegeUrl(privilegeSnap.getPrivilegeUrl());
+					privilegeBasicInfo.setPrivilegeAlias(privilegeSnap.getPrivilegeAlias());
 					Set<PrivilegeBasicInfo> privilegeBasicInfos = new HashSet<>();
 					for(PrivilegeSnap privilegeSnapTemp : privilegeSnapList) {
 						int type3 = privilegeSnapTemp.getPrivilegeType().intValue();
@@ -111,7 +111,7 @@ public class LoginServiceImpl extends BaseService implements LoginService {
 							PrivilegeBasicInfo privilegeBasicInfoChild = new PrivilegeBasicInfo();
 							privilegeBasicInfoChild.setPrivilegeName(privilegeSnapTemp.getPrivilegeName());
 							privilegeBasicInfoChild.setType(type3);
-							privilegeBasicInfoChild.setPrivilegeUrl(privilegeSnapTemp.getPrivilegeUrl());
+							privilegeBasicInfoChild.setPrivilegeAlias(privilegeSnapTemp.getPrivilegeAlias());
 							
 							privilegeBasicInfos.add(privilegeBasicInfoChild);
 						}
@@ -127,9 +127,9 @@ public class LoginServiceImpl extends BaseService implements LoginService {
 			StringBuffer dagger_token = new StringBuffer(daggerTokenPrefix);
 			dagger_token.append(UuidUtils.getUUID());
 			userBasicInfo.setToken(dagger_token.toString());
-			userBasicInfo.setSessionId(sessionId);
+			userBasicInfo.setSessionId(dagger_token.toString());
 			
-			if (sessionMaxsurvival == 0) sessionMaxsurvival = 180L;
+			if (sessionMaxsurvival == 0) sessionMaxsurvival = 1800L;
 	        Gson gson = new Gson();
 	        redisTemplate.opsForValue().set(dagger_token.toString(), gson.toJson(userBasicInfo), sessionMaxsurvival,TimeUnit.SECONDS);
 
@@ -169,13 +169,30 @@ public class LoginServiceImpl extends BaseService implements LoginService {
 				 redisTemplate.expire(daggerToken, sessionMaxsurvival, TimeUnit.SECONDS);
                  userBasicInfo = gson.fromJson(redisTemplate.opsForValue().get(daggerToken).toString(), UserBasicInfo.class);
 			     
-                 log.info("[>>><<<]dagger_token:{},session_time:{},userBasicInfo:{}",daggerToken, sessionMaxsurvival, userBasicInfo);
+                 log.info("[>>>if<<<]dagger_token:{},session_time:{},userBasicInfo:{}",daggerToken, sessionMaxsurvival, userBasicInfo);
 			 }
-			 log.info("[<<<>>>]");
+             log.info("[>>>else<<<]dagger_token:{},session_time:{},userBasicInfo:{}",daggerToken, sessionMaxsurvival, userBasicInfo);
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw new AppException(GeneralExceptionCons.BASE_ERRO_MSG,e);
 		}
 		return userBasicInfo;
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.ziyoujiayuan.api.usermanage.LoginService#updateDaggerTokenTimeOut(java.lang.String)
+	 */
+	@Override
+	public void updateDaggerTokenTimeOut(String daggerToken) throws AppException {
+	   try {
+		   if (redisTemplate.hasKey(daggerToken)) {
+			   log.info("updatetoken is do,token is {};",daggerToken);
+			   redisTemplate.expire(daggerToken, sessionMaxsurvival, TimeUnit.SECONDS);
+		   }
+		   log.info("updatetoken is not,token is {};",daggerToken);
+	   } catch (Exception e) {
+			// TODO: handle exception
+		    throw new AppException(GeneralExceptionCons.BASE_ERRO_MSG,e);
+	   }
+   }
 }

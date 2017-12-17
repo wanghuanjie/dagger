@@ -35,7 +35,7 @@
              t.privilege_dec        as            privilege_dec,
              t.privilege_name       as            privilege_name,
              t.privilege_type       as            privilege_type,
-             t.privilege_url        as            privilege_url,
+             t.privilege_alias      as            privilege_alias,
              t.privilege_co         as            privilege_co,
              t.parent_id            as            parent_id,
              t.status               as            status,

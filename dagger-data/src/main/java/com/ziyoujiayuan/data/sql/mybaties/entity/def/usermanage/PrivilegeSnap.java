@@ -18,7 +18,7 @@ public class PrivilegeSnap {
 
    private Integer privilegeType;
 
-   private String privilegeUrl;
+   private String privilegeAlias;
 
    private Long parentId;
 }

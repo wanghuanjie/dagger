@@ -24,9 +24,11 @@ public class PrivilegeRequestParam {
    
    @NotNull
    @NotEmpty
+   private String privilegeAlias;//权限别名
+   
+   @NotNull
+   @NotEmpty
    private Integer privilegeType;//权限类型
    
-   private long parentId;//父类ID
-   
-   private String privilegeUrl;//权限URL(默认为空)
+   private long parentId;//父类ID   
 }
