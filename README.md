@@ -26,6 +26,18 @@ cloak-view：Thymeleaf + Vue + Element;<br/>
 3.Zookeeper;<br/>
 4.Nginx;<br/>
 
+jar包简介：<br/>
+dagger-api 微服务对内部系统提供的接口依赖;<br/>
+dagger-automaker dagger自动化生成代码框架controller相关;<br/>
+dagger-base 基础功能的提供，例如工具类，基础异常类等;<br/>
+dagger-browser 用户管理controller相关;<br/>
+dagger-core 队列相关核心功能;<br/>
+dagger-data redis、实体类等持久化相关;<br/>
+dagger-service 服务实现相关框架;<br/>
+dagger-test dagger自动化测试、压力测试相关;<br/>
+dagger-web web服务相关依赖;<br/>
+*相关jar包精析以及相关功能介绍，请查看<a href="https://github.com/wanghuanjie/dagger/wiki" target="_Blank">wiki文档</a>
+
 里程碑及下一步<br/>
 1.2017-09-18 Dagger诞生;<br/>
 2.2017-10-15 Dagger基础框架定型;<br/>
