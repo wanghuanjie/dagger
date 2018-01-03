@@ -97,6 +97,12 @@
 	      <artifactId>c3p0</artifactId>
 	      <version>0.9.2.1</version>
 	    </dependency>
+	    
+       <dependency>
+          <groupId>com.xiaoleilu</groupId>
+          <artifactId>hutool-http</artifactId>
+          <version>3.1.1</version>
+       </dependency>
      </dependencies>
    </dependencyManagement>
   
