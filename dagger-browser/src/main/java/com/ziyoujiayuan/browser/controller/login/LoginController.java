@@ -129,4 +129,24 @@ public class LoginController {
 		}
 		return responseJsonResult;
 	}
+	
+	/**
+	 * 当前用户的权限
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/currentPrivilege")
+	public ResponseJsonResult getCurrentPrivilege() {
+		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
+		try {
+            responseJsonResult.setData_collect(loginServe.getCurrentPrivilege());
+			responseJsonResult.setMsg(ResultMsgCons.OPER_SUCCESS);
+            responseJsonResult.setSuccess(true);
+		} catch (Exception e) {
+			responseJsonResult.setMsg(e.getMessage());
+			responseJsonResult.setSuccess(false);
+			log.error(e.getMessage(),e);
+		}
+		return responseJsonResult;
+	}
 }

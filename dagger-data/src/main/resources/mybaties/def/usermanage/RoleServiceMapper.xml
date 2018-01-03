@@ -5,6 +5,23 @@
        <trim prefix="where" prefixOverrides="and|or">  
             <if test="role_id!=null">  
                 AND t.role_id = #{role_id}  
+            </if>  
+            <if test="user_id!=null">  
+                AND t.user_id = #{user_id}  
+            </if>   
+            <if test="privilege_name!=null">  
+                AND t.role_name like #{role_name}  
+            </if>  
+        </trim>
+  </sql>
+  
+  <sql id="selectUserRoles_where">
+       <trim prefix="where" prefixOverrides="and|or">  
+            <if test="role_id!=null">  
+                AND t.role_id = #{role_id}  
+            </if>  
+            <if test="user_id!=null">  
+                AND t1.user_id = #{user_id}  
             </if>   
             <if test="privilege_name!=null">  
                 AND t.role_name like #{role_name}  
@@ -14,10 +31,10 @@
 
   <select id="selectRoles" resultType="java.util.Map">
         select 
-             role_id                as            role_id,
-             role_dec               as            role_desc,
-             role_name              as            role_name,
-             role_co                as            role_co,
+             t.role_id              as            role_id,
+             t.role_dec             as            role_desc,
+             t.role_name            as            role_name,
+             t.role_co              as            role_co,
              t.status               as            status,
              t.creat_time           as            creat_time,
              t.creator              as            creator,
@@ -29,7 +46,24 @@
   </select>
   <select id="selectRoles_count" resultType="int">
         select count(1)
-        from t_role_info t
+          from t_role_info t
         <include refid="selectRoles_where"/>
+  </select>
+  
+  <select id="selectUserRoles" resultType="java.util.Map">
+        select 
+             t.role_id              as            role_id,
+             t.role_dec             as            role_desc,
+             t.role_name            as            role_name,
+             t.role_co              as            role_co,
+             t.status               as            status,
+             t.creat_time           as            creat_time,
+             t.creator              as            creator,
+             t.oper_time            as            oper_time,
+             t.opertor              as            opertor
+        from t_role_info t
+       inner join t_user_role t1 on t.role_id = t1.role_id
+        <include refid="selectUserRoles_where"/>
+    order by t.role_id desc 
   </select>
 </mapper>

@@ -135,7 +135,10 @@
             <groupId>com.github.sgroschupf</groupId>  
             <artifactId>zkclient</artifactId>  
         </dependency> 
-        
+        	<dependency>
+	      <groupId>com.mchange</groupId>
+	      <artifactId>c3p0</artifactId>
+	    </dependency>
 	</dependencies>
 	
 	<build>

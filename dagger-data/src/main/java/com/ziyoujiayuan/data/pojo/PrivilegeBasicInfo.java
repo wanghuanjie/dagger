@@ -17,7 +17,7 @@ import lombok.Data;
 public class PrivilegeBasicInfo implements Serializable{
 
 	private String privilegeName;
-	private String privilegeUrl;
+	private String privilegeAlias;
 	private int type;
 	private Set<PrivilegeBasicInfo> childs;
 	

@@ -71,9 +71,12 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 		Method method = handlerMethod.getMethod();
 		Privilege privilege = method.getAnnotation(Privilege.class);
 		
+		log.info("prehandler:current_user_basic_info:{}"+OnlineUser.current().getUserBasicInfo());
+		
 		if (null == OnlineUser.current().getUserBasicInfo()) {
              return isEmptyUserBasicInfo(arg0, arg1, privilege);
 		} else {
+			loginService.updateDaggerTokenTimeOut(OnlineUser.current().getUserBasicInfo().getSessionId());
 			return isNotEmptyUserBasicInfo(arg0, arg1, privilege);
 		}
 	}
@@ -115,7 +118,7 @@ public class AuthorityHandlerInterceptor implements HandlerInterceptor {
 				arg1.sendRedirect("/login/fail");
 				return false;
 			} else {
-				stageRecord = "[privilege is null]";
+				stageRecord = "[privilege is null,else]";
 				return true;
 			}
 		} catch (Exception e) {

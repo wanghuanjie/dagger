@@ -38,7 +38,10 @@ public class PrivilegeServe {
 		privilegeInfoBean.setPrivilegeDec(privilegeRequestParam.getPrivilegeDec());
 		privilegeInfoBean.setPrivilegeName(privilegeRequestParam.getPrivilegeName());
 		privilegeInfoBean.setPrivilegeType(privilegeRequestParam.getPrivilegeType());
-		privilegeInfoBean.setPrivilegeUrl(privilegeRequestParam.getPrivilegeUrl());
+		if (3L == privilegeInfoBean.getPrivilegeType().longValue()) {
+			privilegeInfoBean.setParentId(privilegeRequestParam.getParentId());
+		}
+		privilegeInfoBean.setPrivilegeAlias(privilegeRequestParam.getPrivilegeAlias());
 		
 		privilegeService.doAddPrivilege(privilegeInfoBean);
 	}
@@ -82,11 +85,11 @@ public class PrivilegeServe {
 	}
 	
 	/**
-	 * 权限解除／关联角色
+	 * 权限解除/关联角色
 	 * @param roleId
 	 * @param privilegeId
 	 */
-	public void togglebind(long roleId , long privilegeId) throws AppException {
-		privilegeService.doToggleBind(privilegeId, roleId);
+	public void togglebind(long roleId , long[] privilegeIds) throws AppException {
+		privilegeService.doToggleBind(privilegeIds, roleId);
 	}
 }

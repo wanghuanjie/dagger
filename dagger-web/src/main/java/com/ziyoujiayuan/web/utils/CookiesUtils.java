@@ -18,6 +18,7 @@ public class CookiesUtils {
 	public  static Cookie addCookie(String key) {
 		Cookie cookie = new Cookie("dagger_token", key);
 		cookie.setPath("/");
+		cookie.setMaxAge(1800);
 		
 		return cookie;
 	}
@@ -28,6 +29,7 @@ public class CookiesUtils {
 	 */
 	public static Cookie cleanCookie() {
 		Cookie cookie = new Cookie("dagger_token", "");
+		cookie.setPath("/");
 		cookie.setMaxAge(0);
 		
 		return cookie;

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ziyoujiayuan.base.exception.AppException;
 import com.ziyoujiayuan.browser.beans.role.RoleRequestParam;
 import com.ziyoujiayuan.browser.cons.ViewsBasePathCons;
+import com.ziyoujiayuan.browser.serve.usermanage.LoginServe;
 import com.ziyoujiayuan.browser.serve.usermanage.RoleServe;
 import com.ziyoujiayuan.web.cons.ResultMsgCons;
 import com.ziyoujiayuan.web.base.BaseController;
@@ -33,6 +34,8 @@ public class RoleController extends BaseController{
 	
 	@Autowired
 	RoleServe roleServe;
+	@Autowired
+	LoginServe loginServe;
 	
 	/**
 	 * 角色管理页面
@@ -50,7 +53,7 @@ public class RoleController extends BaseController{
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("/doadd")
+	@RequestMapping("/doaddrole")
 	public ResponseJsonResult doadd(RoleRequestParam roleRequestParam) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
@@ -148,8 +151,8 @@ public class RoleController extends BaseController{
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
              long userId = ParamUtils.getParameterLong(httpServletRequest, "userId", -1L);
-             if (-1 == userId) {
-				throw new AppException("用户ID不存在，操作失败！");
+             if (-1 == userId) {				
+				throw new AppException("用户ID不能为空,操作失败！");
 			}
 			
 			responseJsonResult.setData_collect(roleServe.queryRoleByUser(userId));
@@ -164,25 +167,15 @@ public class RoleController extends BaseController{
 	}
 	
 	/**
-	 * 用户解绑／关联角色
+	 * 用户解绑/关联角色
 	 * @param httpServletRequest
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping("/dobind")
-	public ResponseJsonResult dobind(HttpServletRequest httpServletRequest) {
+	public ResponseJsonResult dobind(long userId, long roleId) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
-            long userId = ParamUtils.getParameterLong(httpServletRequest, "userId", -1L);
-            if (-1 == userId) {
-				throw new AppException("用户ID不存在，操作失败！");
-			}
-            
-            long roleId = ParamUtils.getParameterLong(httpServletRequest, "roleId", -1L);
-            if (-1 == userId) {
-				throw new AppException("角色ID不存在，操作失败！");
-			}
-
             roleServe.togglebind(roleId, userId);
 		    responseJsonResult.setMsg(ResultMsgCons.OPER_SUCCESS);
             responseJsonResult.setSuccess(true);

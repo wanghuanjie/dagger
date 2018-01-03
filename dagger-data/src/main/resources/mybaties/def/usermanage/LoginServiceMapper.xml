@@ -11,7 +11,7 @@
     <result column="privilege_dec" jdbcType="VARCHAR" property="privilegeDec" />
     <result column="privilege_name" jdbcType="VARCHAR" property="privilegeName" />
     <result column="privilege_type" jdbcType="INTEGER" property="privilegeType" />
-    <result column="privilege_url" jdbcType="VARCHAR" property="privilegeUrl" />
+    <result column="privilege_alias" jdbcType="VARCHAR" property="privilegeAlias" />
     <result column="parent_id" jdbcType="BIGINT" property="parentId" />
   </resultMap>
   <select id="selectPrivilegeByUserId" resultMap="BaseResultMap">
@@ -19,7 +19,7 @@
                p.privilege_dec         as           privilege_dec,
                p.privilege_name        as           privilege_name,
                p.privilege_type        as           privilege_type,
-               p.privilege_url         as           privilege_url,
+               p.privilege_alias       as           privilege_alias,
                p.parent_id             as           parent_id
           from t_role_privilege rp
      left join t_privilege_info p

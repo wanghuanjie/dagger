@@ -1,5 +1,7 @@
 package com.ziyoujiayuan.browser.serve.usermanage;
 
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.ziyoujiayuan.api.usermanage.LoginService;
 import com.ziyoujiayuan.base.exception.AppException;
 import com.ziyoujiayuan.browser.beans.login.LoginRequestParam;
+import com.ziyoujiayuan.data.pojo.PrivilegeBasicInfo;
 import com.ziyoujiayuan.data.pojo.UserBasicInfo;
 import com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.UserInfoBean;
 import com.ziyoujiayuan.web.beans.OnlineUser;
@@ -53,8 +56,9 @@ public class LoginServe {
 	 */
 	public void logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AppException {
 		log.info("logout");
-		loginService.dologout(httpServletRequest.getHeader("dagger_token"));
-		CookiesUtils.cleanCookie();
+		
+		loginService.dologout(OnlineUser.current().getSessionId());
+		httpServletResponse.addCookie(CookiesUtils.cleanCookie());
 		OnlineUser.clean();
 	}
 	
@@ -66,5 +70,15 @@ public class LoginServe {
 	 */
 	public UserBasicInfo getObjectForSession(String daggerToken) throws AppException{
 		return loginService.getUserBasicInfo(daggerToken);
+	}
+	
+	/**
+	 * 获取当前用户权限
+	 * @return
+	 * @throws AppException
+	 */
+	public Set<PrivilegeBasicInfo> getCurrentPrivilege() throws AppException{
+		UserBasicInfo currentUser = OnlineUser.current().getUserBasicInfo();
+		return currentUser.getPrivileges();
 	}
 }

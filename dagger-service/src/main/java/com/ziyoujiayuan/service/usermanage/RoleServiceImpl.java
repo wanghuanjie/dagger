@@ -1,13 +1,13 @@
 package com.ziyoujiayuan.service.usermanage;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.ziyoujiayuan.api.usermanage.RoleService;
 import com.ziyoujiayuan.base.datapager.Pager;
@@ -45,7 +45,6 @@ public class RoleServiceImpl extends BaseService implements RoleService {
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.RoleService#doAddRole(com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.RoleInfoBean)
 	 */
-	@Transactional
 	@Override
 	public void doAddRole(RoleInfoBean roleInfoBean) throws AppException {
 		// TODO Auto-generated method stub
@@ -74,7 +73,6 @@ public class RoleServiceImpl extends BaseService implements RoleService {
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.RoleService#doEditRole(com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.RoleInfoBean)
 	 */
-	@Transactional
 	@Override
 	public void doEditRole(RoleInfoBean roleInfoBean) throws AppException {
 		// TODO Auto-generated method stub
@@ -85,7 +83,6 @@ public class RoleServiceImpl extends BaseService implements RoleService {
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.RoleService#doQueryRoles()
 	 */
-	@Transactional
 	@Override
 	public Pager doQueryRoles(Map<String, Object> param) throws AppException {
 		// TODO Auto-generated method stub
@@ -100,7 +97,6 @@ public class RoleServiceImpl extends BaseService implements RoleService {
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.RoleService#doQueryUsersByRole(long)
 	 */
-	@Transactional
 	@Override
 	public Pager doQueryUsersByRole(long roleId) throws AppException {
 		// TODO Auto-generated method stub
@@ -118,16 +114,18 @@ public class RoleServiceImpl extends BaseService implements RoleService {
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.RoleService#doQueryRoleByUser(long)
 	 */
-	@Transactional
+	@SuppressWarnings("unchecked")
 	@Override
-	public RoleInfoBean doQueryRoleByUser(long userId) throws AppException {
-		return null;
+	public Map<String, Object> doQueryRoleByUser(long userId) throws AppException {
+		Map<String, Object> param = new HashMap<>();
+		param.put("user_id", userId);
+		
+		return (Map<String, Object>)queryObject("com.ziyoujiayuan.data.sql.mybaties.mapper.def.usermanage.RoleServiceMapper.selectUserRoles", param);        	    
 	}
 	
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.RoleService#doAddRoleToUser(long ,long)
 	 */
-	@Transactional
 	@Override
 	public void doToggleBind(long userId ,long roleId) throws AppException {
 		try {
@@ -149,16 +147,21 @@ public class RoleServiceImpl extends BaseService implements RoleService {
 			
 			//TODO 最好更改实体类添加创建时间选项
 			UserRoleBeanExample userRoleBeanExample = new UserRoleBeanExample();
-			userRoleBeanExample.createCriteria().andRoleIdEqualTo(roleId).andUserIdEqualTo(userId);
+			userRoleBeanExample.createCriteria().andUserIdEqualTo(userId);
 			int size = userRoleBeanMapper.selectByExample(userRoleBeanExample).size();
 			
 			UserRoleBean userRoleBean = new UserRoleBean();
 			userRoleBean.setRoleId(roleId);
 			userRoleBean.setUserId(userId);
+			userRoleBean.setCreatTime(new Date());
+			userRoleBean.setCreator("system");
+			userRoleBean.setOperTime(new Date());
+			userRoleBean.setOpertor("system");
 			if(size < 1) {
 			    userRoleBeanMapper.insertSelective(userRoleBean);
 			}else {
-				userRoleBeanMapper.deleteByPrimaryKey(userRoleBean);
+				userRoleBeanMapper.deleteByExample(userRoleBeanExample);
+			    userRoleBeanMapper.insertSelective(userRoleBean);
 			}			
 			
 		} catch (AppException e) {
@@ -169,5 +172,4 @@ public class RoleServiceImpl extends BaseService implements RoleService {
 			throw new AppException(GeneralExceptionCons.BASE_ERRO_MSG,e);
 		}
 	}
-
 }

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.ziyoujiayuan.base.exception.AppException;
 import com.ziyoujiayuan.browser.beans.privilege.PrivilegeRequestParam;
 import com.ziyoujiayuan.browser.cons.ViewsBasePathCons;
@@ -164,26 +165,18 @@ public class PrivilegeController extends BaseController{
 	}
 	
 	/**
-	 * 角色关联／解绑权限
+	 * 角色关联/解绑权限
 	 * @param model
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping("/dobind")
-	public ResponseJsonResult dobind(HttpServletRequest httpServletRequest) {
+	public ResponseJsonResult dobind(long roleId, String privilegeIds) {
 		ResponseJsonResult responseJsonResult = new ResponseJsonResult();
 		try {
-            long roleId = ParamUtils.getParameterLong(httpServletRequest, "roleId",-1L);
-            if (-1 == roleId) {
-				throw new AppException("角色ID不存在，操作失败！");
-			}
-			
-            long privilegeId = ParamUtils.getParameterLong(httpServletRequest, "privilegeId",-1L);
-            if (-1 == privilegeId) {
-				throw new AppException("权限ID不存在，操作失败！");
-			}  
-            
-			privliegeServe.togglebind(roleId, privilegeId);
+			long[] pids = (long[])JSON.parseObject(privilegeIds, long[].class);
+
+			privliegeServe.togglebind(roleId, pids);
 		    responseJsonResult.setMsg(ResultMsgCons.OPER_SUCCESS);
             responseJsonResult.setSuccess(true);
 		} catch (Exception e) {

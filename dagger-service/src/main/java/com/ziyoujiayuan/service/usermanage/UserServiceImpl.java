@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.ziyoujiayuan.api.usermanage.UserService;
 import com.ziyoujiayuan.base.datapager.Pager;
@@ -28,7 +27,6 @@ public class UserServiceImpl extends BaseService implements UserService{
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.UserService#doQueryUsers(java.util.Map)
 	 */
-	@Transactional
 	@Override
 	public Pager doQueryUsers(Map<String, Object> param) throws AppException {
 		// TODO Auto-generated method stub
@@ -43,7 +41,6 @@ public class UserServiceImpl extends BaseService implements UserService{
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.UserService#doToggleFreeze(long)
 	 */
-	@Transactional
 	@Override
 	public void doToggleFreeze(long userId) throws AppException {
 		// TODO Auto-generated method stub
@@ -58,6 +55,7 @@ public class UserServiceImpl extends BaseService implements UserService{
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.UserService#doUpdate(com.ziyoujiayuan.data.sql.mybaties.entity.auto.usermanage.UserInfoBean)
 	 */
+	@Override
     public void doUpdate(UserInfoBean userInfoBean) throws AppException {
 		try {
 			if (0 >= userInfoBean.getUserId()) {
@@ -74,6 +72,7 @@ public class UserServiceImpl extends BaseService implements UserService{
 	/* (non-Javadoc)
 	 * @see com.ziyoujiayuan.api.usermanage.UserService#changePwd(long, java.util.String)
 	 */
+	@Override	
     public void doChangePwd(long userId, String password) throws AppException {
 		try {
 			if (0 >= userId) {
