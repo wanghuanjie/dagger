@@ -25,6 +25,7 @@
     <dagger.data.version>0.0.1-SNAPSHOT</dagger.data.version>
     <dagger.core.version>0.0.1-SNAPSHOT</dagger.core.version>
     <dagger.api.version>0.0.1-SNAPSHOT</dagger.api.version>
+    <dagger.crawler.version>0.0.1-SNAPSHOT</dagger.crawler.version>
     <alibaba.dubbo.version>2.5.6</alibaba.dubbo.version>  
     <apache.zookeeper.version>3.4.9</apache.zookeeper.version>  
     <tec.zkclient.version>0.1</tec.zkclient.version> 
@@ -61,6 +62,12 @@
 	       <artifactId>dagger-api</artifactId>
            <version>${dagger.api.version}</version>
         </dependency>
+
+        <dependency>
+           <groupId>com.ziyoujiayuan</groupId>
+               <artifactId>dagger-crawler</artifactId>
+           <version>${dagger.crawler.version}</version>
+        </dependency>
         
         <dependency>  
             <groupId>com.alibaba</groupId>  
@@ -81,10 +88,10 @@
         </dependency> 
         
         <dependency>
-  			<groupId>org.projectlombok</groupId>
-  			<artifactId>lombok</artifactId>
- 			<version>${projectlombok.lombok.version}</version>
-		</dependency>
+  	    <groupId>org.projectlombok</groupId>
+  	    <artifactId>lombok</artifactId>
+ 	    <version>${projectlombok.lombok.version}</version>
+	</dependency>
 		
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -93,16 +100,16 @@
         </dependency>
         
         <dependency>
-	      <groupId>com.mchange</groupId>
-	      <artifactId>c3p0</artifactId>
-	      <version>0.9.2.1</version>
-	    </dependency>
+	    <groupId>com.mchange</groupId>
+	    <artifactId>c3p0</artifactId>
+	    <version>0.9.2.1</version>
+	</dependency>
 	    
-       <dependency>
-          <groupId>com.xiaoleilu</groupId>
-          <artifactId>hutool-http</artifactId>
-          <version>3.1.1</version>
-       </dependency>
+        <dependency>
+            <groupId>com.xiaoleilu</groupId>
+            <artifactId>hutool-http</artifactId>
+            <version>3.1.1</version>
+        </dependency>
      </dependencies>
    </dependencyManagement>
   
@@ -116,5 +123,6 @@
     <module>dagger-base</module>
     <module>dagger-test</module>
     <module>dagger-automaker</module>
+    <module>dagger-crawler</module>
    </modules>
 </project>
